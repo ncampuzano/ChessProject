@@ -1,21 +1,21 @@
 package UserInterface;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JToolBar;
 import java.awt.BorderLayout;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
+import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.SwingConstants;
 import javax.swing.JPanel;
-import java.awt.Dimension;
+import javax.swing.JToolBar;
+import java.awt.GridLayout;
 
 public class GraphicUI {
 
 	private JFrame frame;
+	private JButton[][] chessBoardButtons = new JButton [8][8];
 
 	/**
 	 * Launch the application.
@@ -48,8 +48,11 @@ public class GraphicUI {
 		frame.setBounds(100, 100, 500, 500);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
+		JPanel MainPanel = new JPanel(new BorderLayout());
+		
 		JToolBar toolBar = new JToolBar();
-		frame.getContentPane().add(toolBar, BorderLayout.NORTH);
+		toolBar.setFloatable(false);
+		MainPanel.add(toolBar, BorderLayout.PAGE_START);
 		
 		JButton btnNewGame = new JButton("Nuevo Juego");
 		btnNewGame.addActionListener(new ActionListener() {
@@ -80,14 +83,22 @@ public class GraphicUI {
 		toolBar.add(btnResign);
 		
 		JLabel lblPlaceholdertext = new JLabel("PlaceHolderText");
-		lblPlaceholdertext.setMinimumSize(new Dimension(260, 14));
-		lblPlaceholdertext.setMaximumSize(new Dimension(260, 14));
-		lblPlaceholdertext.setPreferredSize(new Dimension(260, 14));
-		lblPlaceholdertext.setHorizontalAlignment(SwingConstants.CENTER);
 		toolBar.add(lblPlaceholdertext);
 		
-		JPanel panel = new JPanel();
-		frame.getContentPane().add(panel, BorderLayout.CENTER);
+		frame.getContentPane().add(MainPanel, BorderLayout.NORTH);
+		
+		JPanel GamePanel = new JPanel(new BorderLayout());
+		frame.getContentPane().add(GamePanel, BorderLayout.CENTER);
+		
+		JLabel lblCapturasPromocionesEtc = new JLabel("Capturas, Promociones, etc");
+		GamePanel.add(lblCapturasPromocionesEtc, BorderLayout.WEST);
+		
+		JPanel ChessBoard = new JPanel();
+		GamePanel.add(ChessBoard, BorderLayout.CENTER);
+		ChessBoard.setLayout(new GridLayout(9, 9));
+		
+		
+
 	}
 
 }
