@@ -48,8 +48,11 @@ public class GraphicUI {
 		frame.setBounds(100, 100, 500, 500);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
+		//Generate Main Panel, which contains the Tool Bar and the Game Panel
 		JPanel MainPanel = new JPanel(new BorderLayout());
+		frame.getContentPane().add(MainPanel, BorderLayout.NORTH);
 		
+		//Generate the Tool bar and its 5 components (4 Buttons and a Label)
 		JToolBar toolBar = new JToolBar();
 		toolBar.setFloatable(false);
 		MainPanel.add(toolBar, BorderLayout.PAGE_START);
@@ -85,17 +88,23 @@ public class GraphicUI {
 		JLabel lblPlaceholdertext = new JLabel("PlaceHolderText");
 		toolBar.add(lblPlaceholdertext);
 		
-		frame.getContentPane().add(MainPanel, BorderLayout.NORTH);
-		
+		//Generate the Game Panel, which includes the Board and the extra game information
 		JPanel GamePanel = new JPanel(new BorderLayout());
 		frame.getContentPane().add(GamePanel, BorderLayout.CENTER);
 		
+		//TODO - Display Captured pieces
+		//TODO - Show available promotions when a Pawn reaches the end row
+		//TODO - Other Info (Game notation?)
 		JLabel lblCapturasPromocionesEtc = new JLabel("Capturas, Promociones, etc");
 		GamePanel.add(lblCapturasPromocionesEtc, BorderLayout.WEST);
 		
+		//Generate a 9x9 JPanel (First row and column for notation (l to r :ABCDEFGH) (top to bot: 12345678)
 		JPanel ChessBoard = new JPanel();
 		GamePanel.add(ChessBoard, BorderLayout.CENTER);
-		ChessBoard.setLayout(new GridLayout(9, 9));
+		ChessBoard.setLayout(new GridLayout(0, 9));
+		ChessBoard.add(new JLabel(""));
+		for (int i = (int)'A'; i < (int)'A'+8; i++)
+			ChessBoard.add( new JLabel( Character.toString( (char)i ) ) );
 		
 		
 
