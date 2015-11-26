@@ -5,6 +5,7 @@ public class Piece {
 	public boolean IsWhite;
 	public String Name;
 	public int Type;	
+	public String Position;
 	public String getPieceImage() {
 		return PieceImage;
 	}
