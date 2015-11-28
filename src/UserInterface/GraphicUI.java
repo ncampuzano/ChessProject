@@ -1,6 +1,7 @@
 package UserInterface;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -104,17 +105,23 @@ public class GraphicUI {
 		JPanel ChessBoard = new JPanel();
 		GamePanel.add(ChessBoard, BorderLayout.CENTER);
 		ChessBoard.setLayout(new GridLayout(0, 9));
+		
+		//Adds the first top row, first an empty label, then, 8 Lettered labels
 		ChessBoard.add(new JLabel(""));
-		
-
-		
 		for (int i = (int)'A'; i < (int)'A'+8; i++)
 			ChessBoard.add( new JLabel( Character.toString( (char)i ) ,
                     SwingConstants.CENTER ) );
 		
+		//Generates an 8x8 Array of buttons and saves them 
 		for (int i = 0; i < 8; i++){
 			for (int j = 0; j < 8; j++){
 				JButton b = new JButton();
+				if((i+j)%2 == 0){
+					b.setBackground(Color.WHITE);
+				}
+				else{
+					b.setBackground(Color.BLACK);
+				}
 				b.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						
@@ -123,6 +130,8 @@ public class GraphicUI {
 				chessBoardButtons[i][j] = b;
 			}
 		}
+		
+		//Chooses between adding the leftmost numbers or introducing the 8x8 array of buttons to the main ChessBoard
 		for (int i = 0; i < 8; i++){
 			for (int j = 0; j < 8; j++){
 				switch (j){
