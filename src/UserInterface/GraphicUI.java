@@ -10,6 +10,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
+import javax.swing.SwingConstants;
+
 import java.awt.GridLayout;
 
 public class GraphicUI {
@@ -103,8 +105,35 @@ public class GraphicUI {
 		GamePanel.add(ChessBoard, BorderLayout.CENTER);
 		ChessBoard.setLayout(new GridLayout(0, 9));
 		ChessBoard.add(new JLabel(""));
+		
+
+		
 		for (int i = (int)'A'; i < (int)'A'+8; i++)
-			ChessBoard.add( new JLabel( Character.toString( (char)i ) ) );
+			ChessBoard.add( new JLabel( Character.toString( (char)i ) ,
+                    SwingConstants.CENTER ) );
+		
+		for (int i = 0; i < 8; i++){
+			for (int j = 0; j < 8; j++){
+				JButton b = new JButton();
+				b.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						
+					}
+				});
+				chessBoardButtons[i][j] = b;
+			}
+		}
+		for (int i = 0; i < 8; i++){
+			for (int j = 0; j < 8; j++){
+				switch (j){
+				case(0):
+					ChessBoard.add(new JLabel ("" + (i+1) ,
+                            SwingConstants.CENTER ) );
+				default:
+					ChessBoard.add(chessBoardButtons[i][j]);
+				}
+			}
+		}
 		
 		
 
