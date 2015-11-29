@@ -20,9 +20,11 @@ public class Piece {
     public static final int TYPE_KING = 5;
     public static final int TYPE_PAWN = 6;
     
-    public Piece(boolean IsWhite, int Type){
-    	this.Type = Type;
-    	this.IsWhite = IsWhite;
+    public Piece(boolean isWhite, int type, int row, int column){
+    	this.Type = type;
+    	this.IsWhite = isWhite;
+    	this.Row = row;
+    	this.Column = column;
     	this.PieceImage = getImageForPiece (IsWhite,Type);
     }
 	
