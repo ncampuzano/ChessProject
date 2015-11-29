@@ -189,7 +189,7 @@ public class GraphicUI {
 				}
 				b.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						
+
 					}
 				});
 				chessBoardButtons[i][j] = b;
@@ -227,6 +227,23 @@ public class GraphicUI {
 					}
 				}
 		return ChessBoard;
+	}
+	/**
+	 * What should happen when you press a button?
+	 * @param row
+	 * @param column
+	 */
+	public void buttonPressed (int row, int column){
+		Piece pieceInPosition = pieceInAPosition (row,column);
+		System.out.println( Boolean.toString(pieceInPosition.isIsWhite()) + Integer.toString(pieceInPosition.getType()) );
+		
+	}
+	public Piece pieceInAPosition (int row, int column){
+		for (Piece piece : pieces){
+			if (piece.getRow() == row && piece.getColumn() == column)
+				return piece;
+		}
+		return null;
 	}
 
 	
