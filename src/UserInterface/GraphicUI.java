@@ -68,6 +68,27 @@ public class GraphicUI {
 		JButton btnNewGame = new JButton("Nuevo Juego");
 		btnNewGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				//Generate the Game Panel, which includes the Board and the extra game information
+				JPanel GamePanel = new JPanel(new BorderLayout());
+				frame.getContentPane().add(GamePanel, BorderLayout.CENTER);
+				
+				//TODO - Display Captured pieces
+				//TODO - Show available promotions when a Pawn reaches the end row
+				//TODO - Other Info (Game notation?)
+				JLabel lblCapturasPromocionesEtc = new JLabel("Capturas, Promociones, etc");
+				GamePanel.add(lblCapturasPromocionesEtc, BorderLayout.WEST);
+				
+
+				//Instance the basic ChessBoard
+				chessBoardButtons = setBasicChessBoardButtons();
+				JPanel ChessBoard = setChessBoard(chessBoardButtons);
+				GamePanel.add(ChessBoard, BorderLayout.CENTER);
+				
+				initializeBoard();
+				
+				chessBoardButtons = paintPieces(pieces,chessBoardButtons);
+				ChessBoard = setChessBoard(chessBoardButtons);
+				GamePanel.add(ChessBoard, BorderLayout.CENTER);
 			}
 		});
 		toolBar.add(btnNewGame);
@@ -96,30 +117,7 @@ public class GraphicUI {
 		JLabel lblPlaceholdertext = new JLabel("PlaceHolderText");
 		toolBar.add(lblPlaceholdertext);
 		
-		//Generate the Game Panel, which includes the Board and the extra game information
-		JPanel GamePanel = new JPanel(new BorderLayout());
-		frame.getContentPane().add(GamePanel, BorderLayout.CENTER);
 		
-		//TODO - Display Captured pieces
-		//TODO - Show available promotions when a Pawn reaches the end row
-		//TODO - Other Info (Game notation?)
-		JLabel lblCapturasPromocionesEtc = new JLabel("Capturas, Promociones, etc");
-		GamePanel.add(lblCapturasPromocionesEtc, BorderLayout.WEST);
-		
-
-		//Instance the basic ChessBoard
-		chessBoardButtons = setBasicChessBoardButtons();
-		
-		//Generates the no-pieces ChessBoard
-		//Not needed, but useful for debugging
-		JPanel ChessBoard = setChessBoard(chessBoardButtons);
-		GamePanel.add(ChessBoard, BorderLayout.CENTER);
-		
-		initializeBoard();
-		
-		chessBoardButtons = paintPieces(pieces,chessBoardButtons);
-		ChessBoard = setChessBoard(chessBoardButtons);
-		GamePanel.add(ChessBoard, BorderLayout.CENTER);
 		
 	}
 	
@@ -237,14 +235,20 @@ public class GraphicUI {
 	}
 	/**
 	 * What should happen when you press a button?
-	 * @param row
-	 * @param column
+	 * @param row the row of the button
+	 * @param column the column of the button
 	 */
 	public void buttonPressed (int row, int column){
 		Piece pieceInPosition = pieceInAPosition (row,column);
 		System.out.println( Boolean.toString(pieceInPosition.isIsWhite()) + Integer.toString(pieceInPosition.getType()) );
 		
 	}
+	/**
+	 * Finds the piece that is ocuppying a especific row and column
+	 * @param row the row integer
+	 * @param column the column integer
+	 * @return the piece object ocuppying that row and column. If empty, returns null
+	 */
 	public Piece pieceInAPosition (int row, int column){
 		for (Piece piece : pieces){
 			if (piece.getRow() == row && piece.getColumn() == column)
