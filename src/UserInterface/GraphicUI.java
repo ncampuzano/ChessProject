@@ -105,49 +105,11 @@ public class GraphicUI {
 		JLabel lblCapturasPromocionesEtc = new JLabel("Capturas, Promociones, etc");
 		GamePanel.add(lblCapturasPromocionesEtc, BorderLayout.WEST);
 		
-		//Generate a 9x9 JPanel (First row and column for notation (l to r :ABCDEFGH) (top to bot: 12345678)
-		JPanel ChessBoard = new JPanel();
+
+		//Instance the basic ChessBoard
+		JPanel ChessBoard = setChessBoard(chessBoardButtons);
 		GamePanel.add(ChessBoard, BorderLayout.CENTER);
-		ChessBoard.setLayout(new GridLayout(0, 9));
 		
-		//Adds the first top row, first an empty label, then, 8 Lettered labels
-		ChessBoard.add(new JLabel(""));
-		for (int i = (int)'A'; i < (int)'A'+8; i++)
-			ChessBoard.add( new JLabel( Character.toString( (char)i ) ,
-                    SwingConstants.CENTER ) );
-		
-		//Generates an 8x8 Array of buttons and saves them 
-		for (int i = 0; i < 8; i++){
-			for (int j = 0; j < 8; j++){
-				JButton b = new JButton();
-				//Color each button the appropiate color
-				if((i+j)%2 == 0){
-					b.setBackground(Color.WHITE);
-				}
-				else{
-					b.setBackground(Color.BLACK);
-				}
-				b.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						
-					}
-				});
-				chessBoardButtons[i][j] = b;
-			}
-		}
-		
-		//Chooses between adding the leftmost numbers or introducing the 8x8 array of buttons to the main ChessBoard
-		for (int i = 0; i < 8; i++){
-			for (int j = 0; j < 8; j++){
-				switch (j){
-				case(0):
-					ChessBoard.add(new JLabel ("" + (8-i) ,
-                            SwingConstants.CENTER ) );
-				default:
-					ChessBoard.add(chessBoardButtons[i][j]);
-				}
-			}
-		}
 		initializeBoard();
 		
 	}
@@ -181,6 +143,52 @@ public class GraphicUI {
 		for (int i = 1; i < 9; i++){
 			pieces.add(new Piece (false,6,7,i));
 		}
+	}
+	
+	
+	public JPanel setChessBoard(JButton[][] chessBoardButtons){
+		//Generate a 9x9 JPanel (First row and column for notation (l to r :ABCDEFGH) (bot to top: 12345678)
+		JPanel ChessBoard = new JPanel();
+
+		ChessBoard.setLayout(new GridLayout(0, 9));
+		
+		ChessBoard.add(new JLabel(""));
+		for (int i = (int)'A'; i < (int)'A'+8; i++)
+			ChessBoard.add( new JLabel( Character.toString( (char)i ) ,
+                    SwingConstants.CENTER ) );
+		
+		//Generates an 8x8 Array of buttons and saves them 
+		for (int i = 0; i < 8; i++){
+			for (int j = 0; j < 8; j++){
+				JButton b = new JButton();
+				//Color each button the appropiate color
+				if((i+j)%2 == 0){
+					b.setBackground(Color.WHITE);
+				}
+				else{
+					b.setBackground(Color.BLACK);
+				}
+				b.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						
+					}
+				});
+				chessBoardButtons[i][j] = b;
+			}
+		}
+		//Chooses between adding the leftmost numbers or introducing the 8x8 array of buttons to the main ChessBoard
+				for (int i = 0; i < 8; i++){
+					for (int j = 0; j < 8; j++){
+						switch (j){
+						case(0):
+							ChessBoard.add(new JLabel ("" + (8-i) ,
+		                            SwingConstants.CENTER ) );
+						default:
+							ChessBoard.add(chessBoardButtons[i][j]);
+						}
+					}
+				}
+		return ChessBoard;
 	}
 
 	
