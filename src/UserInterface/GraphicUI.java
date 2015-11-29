@@ -179,20 +179,27 @@ public class GraphicUI {
 		//Generates an 8x8 Array of buttons and saves them 
 		for (int i = 0; i < 8; i++){
 			for (int j = 0; j < 8; j++){
-				JButton b = new JButton();
+				chessBoardButtons[i][j] = new JButton();
+				
 				//Color each button the appropiate color
 				if((i+j)%2 == 0){
-					b.setBackground(Color.WHITE);
+					chessBoardButtons[i][j].setBackground(Color.WHITE);
 				}
 				else{
-					b.setBackground(Color.GRAY);
+					chessBoardButtons[i][j].setBackground(Color.GRAY);
 				}
-				b.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
+				
+				//Fucked up attempt at a solution
+				//The variables in the actionPerformed() function must be final
+				//MUST be fixed
+				final int temp = i;
+				final int temp2 = j;
 
+				chessBoardButtons[i][j].addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						buttonPressed(8-temp, temp2+1);
 					}
 				});
-				chessBoardButtons[i][j] = b;
 			}
 		}
 		return chessBoardButtons;
