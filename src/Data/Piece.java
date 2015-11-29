@@ -5,12 +5,13 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 
 public class Piece {
-	public Image PieceImage;
-	public boolean IsWhite;
-	public String Name;
-	public int Type;	
-	public String Position;
-	
+	private Image PieceImage;
+	private boolean IsWhite;
+	private String Name;
+	private int Type;
+	private int Row;
+	private int Column;
+
 	//Constants used to identify the type of piece
 	public static final int TYPE_ROOK = 1;
     public static final int TYPE_KNIGHT = 2;
@@ -18,7 +19,29 @@ public class Piece {
     public static final int TYPE_QUEEN = 4;
     public static final int TYPE_KING = 5;
     public static final int TYPE_PAWN = 6;
+    
+    public Piece(boolean IsWhite, int Type){
+    	this.Type = Type;
+    	this.IsWhite = IsWhite;
+    	this.PieceImage = getImageForPiece (IsWhite,Type);
+    }
 	
+	public int getColumn() {
+		return Column;
+	}
+
+	public void setColumn(int column) {
+		Column = column;
+	}
+
+	public int getRow() {
+		return Row;
+	}
+
+	public void setRow(int row) {
+		Row = row;
+	}
+
 	public Image getPieceImage() {
 		return PieceImage;
 	}
@@ -45,11 +68,11 @@ public class Piece {
 	}
 
 	//Searches in the project folder for the right image to use on each type and color of piece
-	private Image getImageForPiece(int color, int type) {
+	private Image getImageForPiece(boolean isWhite, int type) {
 		 
 	    String filename = "";
 	 
-	    filename += (this.isIsWhite() ? "w" : "b");
+	    filename += (isWhite ? "w" : "b");
 	    switch (type) {
 	        case TYPE_BISHOP:
 	            filename += "b";
