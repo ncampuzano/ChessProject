@@ -21,8 +21,12 @@ import java.awt.GridLayout;
 public class GraphicUI {
 
 	private JFrame frame;
-	private JButton[][] chessBoardButtons = new JButton [8][8];
+	public JButton[][] chessBoardButtons = new JButton [8][8];
 	public List<Piece> pieces = new ArrayList<>();
+	public boolean isHoldingAPiece = false;
+	public Piece heldPiece = null;
+	public JPanel ChessBoard = null;
+	public JPanel GamePanel = null;
 
 	/**
 	 * Launch the application.
@@ -69,7 +73,7 @@ public class GraphicUI {
 		btnNewGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//Generate the Game Panel, which includes the Board and the extra game information
-				JPanel GamePanel = new JPanel(new BorderLayout());
+				GamePanel = new JPanel(new BorderLayout());
 				frame.getContentPane().add(GamePanel, BorderLayout.CENTER);
 				
 				//TODO - Display Captured pieces
@@ -81,7 +85,7 @@ public class GraphicUI {
 
 				//Instance the basic ChessBoard
 				chessBoardButtons = setBasicChessBoardButtons();
-				JPanel ChessBoard = setChessBoard(chessBoardButtons);
+				ChessBoard = setChessBoard(chessBoardButtons);
 				GamePanel.add(ChessBoard, BorderLayout.CENTER);
 				
 				initializeBoard();
@@ -166,7 +170,6 @@ public class GraphicUI {
 			chessBoardButtons[8-(piece.getRow())][piece.getColumn()-1].setIcon(new ImageIcon(piece.getPieceImage())); 
 		}
 		return chessBoardButtons;
-		
 	}
 	
 	/**
@@ -233,14 +236,13 @@ public class GraphicUI {
 				}
 		return ChessBoard;
 	}
+	
 	/**
 	 * What should happen when you press a button?
 	 * @param row the row of the button
 	 * @param column the column of the button
 	 */
 	public void buttonPressed (int row, int column){
-		Piece pieceInPosition = pieceInAPosition (row,column);
-		System.out.println( Boolean.toString(pieceInPosition.isIsWhite()) + Integer.toString(pieceInPosition.getType()) );
 		
 	}
 	/**
