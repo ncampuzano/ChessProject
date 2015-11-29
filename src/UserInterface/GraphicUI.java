@@ -1,10 +1,12 @@
 package UserInterface;
+import Data.*;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.*;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -19,6 +21,7 @@ public class GraphicUI {
 
 	private JFrame frame;
 	private JButton[][] chessBoardButtons = new JButton [8][8];
+	public List<Piece> pieces = new ArrayList<>();
 
 	/**
 	 * Launch the application.
@@ -55,7 +58,8 @@ public class GraphicUI {
 		JPanel MainPanel = new JPanel(new BorderLayout());
 		frame.getContentPane().add(MainPanel, BorderLayout.NORTH);
 		
-		//Generate the Tool bar and its 5 components (4 Buttons and a Label)
+		//Generate the Tool bar and its 5 components (A label and 4 buttons)
+		//TODO - Add functionality
 		JToolBar toolBar = new JToolBar();
 		toolBar.setFloatable(false);
 		MainPanel.add(toolBar, BorderLayout.PAGE_START);
@@ -116,6 +120,7 @@ public class GraphicUI {
 		for (int i = 0; i < 8; i++){
 			for (int j = 0; j < 8; j++){
 				JButton b = new JButton();
+				//Color each button the appropiate color
 				if((i+j)%2 == 0){
 					b.setBackground(Color.WHITE);
 				}
@@ -136,16 +141,47 @@ public class GraphicUI {
 			for (int j = 0; j < 8; j++){
 				switch (j){
 				case(0):
-					ChessBoard.add(new JLabel ("" + (i+1) ,
+					ChessBoard.add(new JLabel ("" + (8-i) ,
                             SwingConstants.CENTER ) );
 				default:
 					ChessBoard.add(chessBoardButtons[i][j]);
 				}
 			}
 		}
+		initializeBoard();
 		
+	}
+	
+	//Instances all starting pieces and adds them to a list
+	public void initializeBoard(){
+		//White pieces
+		pieces.add(new Piece (true,1,1,1));
+		pieces.add(new Piece (true,2,1,2));
+		pieces.add(new Piece (true,3,1,3));
+		pieces.add(new Piece (true,4,1,4));
+		pieces.add(new Piece (true,5,1,5));
+		pieces.add(new Piece (true,3,1,6));
+		pieces.add(new Piece (true,2,1,7));
+		pieces.add(new Piece (true,1,1,8));
+		//White Pawns
+		for (int i = 1; i < 9; i++){
+			pieces.add(new Piece (true,6,2,i));
+		}
 		
-
+		//Black pieces
+		pieces.add(new Piece (false,1,8,1));
+		pieces.add(new Piece (false,2,8,2));
+		pieces.add(new Piece (false,3,8,3));
+		pieces.add(new Piece (false,4,8,4));
+		pieces.add(new Piece (false,5,8,5));
+		pieces.add(new Piece (false,3,8,6));
+		pieces.add(new Piece (false,2,8,7));
+		pieces.add(new Piece (false,1,8,8));
+		//Black Pawns
+		for (int i = 1; i < 9; i++){
+			pieces.add(new Piece (false,6,7,i));
+		}
 	}
 
+	
 }
