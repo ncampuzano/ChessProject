@@ -24,8 +24,8 @@ public class ChessGUI {
 	private boolean isHoldingAPiece = false;
 	private Piece heldPiece = null;
 	private int gameState = GAME_STATE_WHITE;
-    static final int GAME_STATE_WHITE = 0;
-    static final int GAME_STATE_BLACK = 1;
+    static final int GAME_STATE_WHITE = 1;
+    static final int GAME_STATE_BLACK = 0;
     public JLabel lblGameState;
 	
 	public ChessGUI(JFrame frame){
@@ -229,11 +229,7 @@ public class ChessGUI {
 	}
 	
 	public boolean canPieceMove(Piece piece){
-		/* isIsWhite() returns true if the piece is white
-		 * to compare it to the gameState (where white is 0)
-		 * we cast true as 0, and false as 1
-		 */
-		if((piece.isIsWhite() ? 0 : 1) == gameState ){
+		if((piece.isIsWhite() ? 1 : 0) == gameState ){
 			return true;
 		}
 		return false;
