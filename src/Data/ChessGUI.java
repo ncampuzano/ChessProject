@@ -158,7 +158,7 @@ public class ChessGUI {
 			isHoldingAPiece = false;
 		}
 		else{
-			if(pieceInAPosition(row,column) != null){
+			if(pieceInAPosition(row,column) != null && canPieceMove(pieceInAPosition(row,column))){
 				heldPiece = pieceInAPosition (row,column);
 				isHoldingAPiece = true;
 			}
@@ -226,6 +226,17 @@ public class ChessGUI {
 	public void repaintPieces(){
 		clearBoard();
 		paintPieces();
+	}
+	
+	public boolean canPieceMove(Piece piece){
+		/* isIsWhite() returns true if the piece is white
+		 * to compare it to the gameState (where white is 0)
+		 * we cast true as 0, and false as 1
+		 */
+		if((piece.isIsWhite() ? 0 : 1) == gameState ){
+			return true;
+		}
+		return false;
 	}
 	
 	
