@@ -74,6 +74,7 @@ public class GraphicUI {
 			public void actionPerformed(ActionEvent e) {
 				//Generate the Game Panel, which includes the Board and the extra game information
 				Chess =  new ChessGUI(frame);
+				toolBar.add(Chess.lblGameState);
 			}
 		});
 		toolBar.add(btnNewGame);
@@ -99,18 +100,18 @@ public class GraphicUI {
 		});
 		toolBar.add(btnResign);
 		
-		toolBar.addSeparator();
 		
-		JLabel lblPlaceholdertext = new JLabel("PlaceHolderText");
-		toolBar.add(lblPlaceholdertext);
+		
+		
 		JButton btnChangeGameState = new JButton("change");
         btnChangeGameState.addActionListener(new ActionListener() {
         			public void actionPerformed(ActionEvent e) {
         				Chess.changeGameState();
         			}
         		});
-        btnChangeGameState.setBounds(0, 0, 80, 30);
         toolBar.add(btnChangeGameState);
+        toolBar.addSeparator();
 		
+
 	}
 }

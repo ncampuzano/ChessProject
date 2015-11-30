@@ -26,7 +26,7 @@ public class ChessGUI {
 	private int gameState = GAME_STATE_WHITE;
     static final int GAME_STATE_WHITE = 0;
     static final int GAME_STATE_BLACK = 1;
-    private JLabel lblGameState;
+    public JLabel lblGameState;
 	
 	public ChessGUI(JFrame frame){
 		//Generate the Game Panel, which includes the Board and the extra game information
@@ -38,8 +38,9 @@ public class ChessGUI {
 		//TODO - Other Info (Game notation?)
 		String labelText = this.getGameStateAsText();
 		lblGameState = new JLabel(labelText);
-		GamePanel.add(lblGameState, BorderLayout.WEST);
 		
+		JLabel lblCapturasPromocionesEtc = new JLabel("Capturas, Promociones, etc");
+		GamePanel.add(lblCapturasPromocionesEtc, BorderLayout.WEST);
 		
 		//Instance the basic ChessBoard
 		chessBoardButtons = setBasicChessBoardButtons();
@@ -57,7 +58,7 @@ public class ChessGUI {
 	 * @return an 8x8 array of buttons with just colored backgrounds
 	 */
 	private String getGameStateAsText() {
-        return (this.gameState == GAME_STATE_BLACK ? "black" : "white");
+        return (this.gameState == GAME_STATE_BLACK ? "Juegan negras" : "Juegan blancas");
     }
  
     /**
