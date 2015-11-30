@@ -27,6 +27,7 @@ public class GraphicUI {
 	public Piece heldPiece = null;
 	public JPanel ChessBoard = null;
 	public JPanel GamePanel = null;
+	public ChessGUI Chess = null;
 
 	/**
 	 * Launch the application.
@@ -74,25 +75,7 @@ public class GraphicUI {
 			public void actionPerformed(ActionEvent e) {
 				//Generate the Game Panel, which includes the Board and the extra game information
 				GamePanel = new JPanel(new BorderLayout());
-				frame.getContentPane().add(GamePanel, BorderLayout.CENTER);
-				
-				//TODO - Display Captured pieces
-				//TODO - Show available promotions when a Pawn reaches the end row
-				//TODO - Other Info (Game notation?)
-				JLabel lblCapturasPromocionesEtc = new JLabel("Capturas, Promociones, etc");
-				GamePanel.add(lblCapturasPromocionesEtc, BorderLayout.WEST);
-				
-
-				//Instance the basic ChessBoard
-				chessBoardButtons = setBasicChessBoardButtons();
-				ChessBoard = setChessBoard(chessBoardButtons);
-				GamePanel.add(ChessBoard, BorderLayout.CENTER);
-				
-				initializeBoard();
-				paintPieces();
-				
-				ChessBoard = setChessBoard(chessBoardButtons);
-				GamePanel.add(ChessBoard, BorderLayout.CENTER);
+				Chess =  new ChessGUI(frame);
 			}
 		});
 		toolBar.add(btnNewGame);
@@ -124,170 +107,4 @@ public class GraphicUI {
 		
 		
 	}
-	
-	/**
-	 *Generates the starting pieces, saving them into the ArrayList pieces
-	 *Completely unmanageable code, fix later
-	 */
-	public void initializeBoard(){
-		//White pieces
-		pieces.add(new Piece (true,1,1,1));
-		pieces.add(new Piece (true,2,1,2));
-		pieces.add(new Piece (true,3,1,3));
-		pieces.add(new Piece (true,4,1,4));
-		pieces.add(new Piece (true,5,1,5));
-		pieces.add(new Piece (true,3,1,6));
-		pieces.add(new Piece (true,2,1,7));
-		pieces.add(new Piece (true,1,1,8));
-		//White Pawns
-		for (int i = 1; i < 9; i++){
-			pieces.add(new Piece (true,6,2,i));
-		}
-		
-		//Black pieces
-		pieces.add(new Piece (false,1,8,1));
-		pieces.add(new Piece (false,2,8,2));
-		pieces.add(new Piece (false,3,8,3));
-		pieces.add(new Piece (false,5,8,4));
-		pieces.add(new Piece (false,4,8,5));
-		pieces.add(new Piece (false,3,8,6));
-		pieces.add(new Piece (false,2,8,7));
-		pieces.add(new Piece (false,1,8,8));
-		//Black Pawns
-		for (int i = 1; i < 9; i++){
-			pieces.add(new Piece (false,6,7,i));
-		}
-	}
-	
-	/**
-	 * 
-	 * @param pieces The list of pieces that must be painted
-	 * @param chessBoardButtons An already existing array of buttons to be modified
-	 * @return chessBoardButtons An array of buttons that has the painted pieces
-	 */
-	public void paintPieces(){
-		for(Piece piece : pieces){
-			chessBoardButtons[8-(piece.getRow())][piece.getColumn()-1].setIcon(new ImageIcon(piece.getPieceImage())); 
-		}
-	}
-	
-	/**
-	 * Generates the basic background-colored array of buttons
-	 * @return an 8x8 array of buttons with just colored backgrounds
-	 */
-	public JButton[][] setBasicChessBoardButtons (){
-		//Generates an 8x8 Array of buttons and saves them 
-		for (int i = 0; i < 8; i++){
-			for (int j = 0; j < 8; j++){
-				chessBoardButtons[i][j] = new JButton();
-				
-				//Color each button the appropiate color
-				if((i+j)%2 == 0){
-					chessBoardButtons[i][j].setBackground(Color.WHITE);
-				}
-				else{
-					chessBoardButtons[i][j].setBackground(Color.GRAY);
-				}
-				
-				//Fucked up attempt at a solution
-				//The variables in the actionPerformed() function must be final
-				//MUST be fixed
-				final int temp = i;
-				final int temp2 = j;
-
-				chessBoardButtons[i][j].addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						buttonPressed(8-temp, temp2+1);
-					}
-				});
-			}
-		}
-		return chessBoardButtons;
-	}
-	/**
-	 * Generates an entire ChessBoard , including a first row and first column of notation, and an 8x8 array of buttons
-	 * @param chessBoardButtons The buttons that must be shown
-	 * @return a ChessBoard with notation and the buttons
-	 */
-	public JPanel setChessBoard(JButton[][] chessBoardButtons){
-		//Generate a 9x9 JPanel (First row and column for notation (l to r :ABCDEFGH) (bot to top: 12345678)
-		JPanel ChessBoard = new JPanel();
-
-		ChessBoard.setLayout(new GridLayout(0, 9));
-		
-		ChessBoard.add(new JLabel(""));
-		for (int i = (int)'A'; i < (int)'A'+8; i++)
-			ChessBoard.add( new JLabel( Character.toString( (char)i ) ,
-                    SwingConstants.CENTER ) );
-		
-		
-		//Chooses between adding the leftmost numbers or introducing the 8x8 array of buttons to the main ChessBoard
-				for (int i = 0; i < 8; i++){
-					for (int j = 0; j < 8; j++){
-						switch (j){
-						case(0):
-							ChessBoard.add(new JLabel ("" + (8-i) ,
-		                            SwingConstants.CENTER ) );
-						default:
-							ChessBoard.add(chessBoardButtons[i][j]);
-						}
-					}
-				}
-		return ChessBoard;
-	}
-	
-	/**
-	 * The first time a button is pressed, it is saved in the global variable heldPiece
-	 * The second time a button is pressed, it is removed from the list, its position is changed, its re-added to the list and re painted
-	 * @param row the row of the button
-	 * @param column the column of the button
-	 */
-	public void buttonPressed (int row, int column){
-		if(isHoldingAPiece){
-			
-			pieces.remove(heldPiece);
-			heldPiece.setColumn(column);
-			heldPiece.setRow(row);
-			pieces.add(heldPiece);
-			repaintPieces();
-			
-			//Reset held piece
-			heldPiece = null;
-			isHoldingAPiece = false;
-		}
-		else{
-			if(pieceInAPosition(row,column) != null){
-				heldPiece = pieceInAPosition (row,column);
-				isHoldingAPiece = true;
-			}
-		}
-	}
-	/**
-	 * Finds the piece that is occupying a especific row and column
-	 * @param row the row integer
-	 * @param column the column integer
-	 * @return the piece object occupying that row and column. If empty, returns null
-	 */
-	public Piece pieceInAPosition (int row, int column){
-		for (Piece piece : pieces){
-			if (piece.getRow() == row && piece.getColumn() == column)
-				return piece;
-		}
-		return null;
-	}
-	
-	public void clearBoard (){
-		for(int i = 0; i < 8 ; i++){
-			for(int j = 0 ; j < 8; j++){
-				chessBoardButtons[i][j].setIcon(null);
-			}
-			
-		}
-	}
-	public void repaintPieces(){
-		clearBoard();
-		paintPieces();
-	}
-
-	
 }
