@@ -40,12 +40,13 @@ public class ChessGUI {
 		chessBoardButtons = setBasicChessBoardButtons();
 		ChessBoard = setChessBoard(chessBoardButtons);
 		GamePanel.add(ChessBoard, BorderLayout.CENTER);
-		initializeBoard();
+		initializePieces();
 		paintPieces();
 		
 		ChessBoard = setChessBoard(chessBoardButtons);
 		GamePanel.add(ChessBoard, BorderLayout.CENTER);
 	}
+	
 	/**
 	 * Generates the basic background-colored array of buttons
 	 * @return an 8x8 array of buttons with just colored backgrounds
@@ -79,6 +80,8 @@ public class ChessGUI {
 		}
 		return chessBoardButtons;
 	}
+	
+	
 	public JPanel setChessBoard(JButton[][] chessBoardButtons){
 		//Generate a 9x9 JPanel (First row and column for notation (l to r :ABCDEFGH) (bot to top: 12345678)
 		JPanel ChessBoard = new JPanel();
@@ -105,6 +108,8 @@ public class ChessGUI {
 				}
 		return ChessBoard;
 	}
+	
+	
 	public void buttonPressed (int row, int column){
 		if(isHoldingAPiece){
 			
@@ -125,35 +130,39 @@ public class ChessGUI {
 			}
 		}
 	}
-	public void initializeBoard(){
+	
+	
+	public void initializePieces(){
 		//White pieces
-		pieces.add(new Piece (true,1,1,1));
-		pieces.add(new Piece (true,2,1,2));
-		pieces.add(new Piece (true,3,1,3));
-		pieces.add(new Piece (true,4,1,4));
-		pieces.add(new Piece (true,5,1,5));
-		pieces.add(new Piece (true,3,1,6));
-		pieces.add(new Piece (true,2,1,7));
-		pieces.add(new Piece (true,1,1,8));
+		pieces.add(new Piece (true,Piece.TYPE_ROOK  ,1,1));
+		pieces.add(new Piece (true,Piece.TYPE_KNIGHT,1,2));
+		pieces.add(new Piece (true,Piece.TYPE_BISHOP,1,3));
+		pieces.add(new Piece (true,Piece.TYPE_QUEEN ,1,4));
+		pieces.add(new Piece (true,Piece.TYPE_KING  ,1,5));
+		pieces.add(new Piece (true,Piece.TYPE_BISHOP,1,6));
+		pieces.add(new Piece (true,Piece.TYPE_KNIGHT,1,7));
+		pieces.add(new Piece (true,Piece.TYPE_ROOK  ,1,8));
 		//White Pawns
 		for (int i = 1; i < 9; i++){
-			pieces.add(new Piece (true,6,2,i));
+			pieces.add(new Piece (true,Piece.TYPE_PAWN,2,i));
 		}
 		
 		//Black pieces
-		pieces.add(new Piece (false,1,8,1));
-		pieces.add(new Piece (false,2,8,2));
-		pieces.add(new Piece (false,3,8,3));
-		pieces.add(new Piece (false,5,8,4));
-		pieces.add(new Piece (false,4,8,5));
-		pieces.add(new Piece (false,3,8,6));
-		pieces.add(new Piece (false,2,8,7));
-		pieces.add(new Piece (false,1,8,8));
+		pieces.add(new Piece (false,Piece.TYPE_ROOK  ,8,1));
+		pieces.add(new Piece (false,Piece.TYPE_KNIGHT,8,2));
+		pieces.add(new Piece (false,Piece.TYPE_BISHOP,8,3));
+		pieces.add(new Piece (false,Piece.TYPE_KING  ,8,4));
+		pieces.add(new Piece (false,Piece.TYPE_QUEEN ,8,5));
+		pieces.add(new Piece (false,Piece.TYPE_BISHOP,8,6));
+		pieces.add(new Piece (false,Piece.TYPE_KNIGHT,8,7));
+		pieces.add(new Piece (false,Piece.TYPE_ROOK  ,8,8));
 		//Black Pawns
 		for (int i = 1; i < 9; i++){
-			pieces.add(new Piece (false,6,7,i));
+			pieces.add(new Piece (false,Piece.TYPE_PAWN,7,i));
 		}
 	}
+	
+	
 	public Piece pieceInAPosition (int row, int column){
 		for (Piece piece : pieces){
 			if (piece.getRow() == row && piece.getColumn() == column)
@@ -161,6 +170,7 @@ public class ChessGUI {
 		}
 		return null;
 	}
+	
 	
 	public void clearBoard (){
 		for(int i = 0; i < 8 ; i++){
@@ -170,15 +180,22 @@ public class ChessGUI {
 			
 		}
 	}
+	
+	
 	public void paintPieces(){
 		for(Piece piece : pieces){
 			chessBoardButtons[8-(piece.getRow())][piece.getColumn()-1].setIcon(new ImageIcon(piece.getPieceImage())); 
 		}
 	}
+	
+	
 	public void repaintPieces(){
 		clearBoard();
 		paintPieces();
 	}
+	
+	
+	
 	public List<Piece> getPieces() {
 		return pieces;
 	}

@@ -99,6 +99,8 @@ public class GraphicUI {
 		});
 		toolBar.add(btnResign);
 		
+		toolBar.addSeparator();
+		
 		JLabel lblPlaceholdertext = new JLabel("PlaceHolderText");
 		toolBar.add(lblPlaceholdertext);
 		
