@@ -89,8 +89,8 @@ public class GraphicUI {
 				GamePanel.add(ChessBoard, BorderLayout.CENTER);
 				
 				initializeBoard();
+				paintPieces();
 				
-				chessBoardButtons = paintPieces(pieces,chessBoardButtons);
 				ChessBoard = setChessBoard(chessBoardButtons);
 				GamePanel.add(ChessBoard, BorderLayout.CENTER);
 			}
@@ -165,11 +165,10 @@ public class GraphicUI {
 	 * @param chessBoardButtons An already existing array of buttons to be modified
 	 * @return chessBoardButtons An array of buttons that has the painted pieces
 	 */
-	public JButton[][] paintPieces(List<Piece> pieces, JButton[][] chessBoardButtons){
+	public void paintPieces(){
 		for(Piece piece : pieces){
 			chessBoardButtons[8-(piece.getRow())][piece.getColumn()-1].setIcon(new ImageIcon(piece.getPieceImage())); 
 		}
-		return chessBoardButtons;
 	}
 	
 	/**
@@ -238,18 +237,36 @@ public class GraphicUI {
 	}
 	
 	/**
-	 * What should happen when you press a button?
+	 * The first time a button is pressed, it is saved in the global variable heldPiece
+	 * The second time a button is pressed, it is removed from the list, its position is changed, its re-added to the list and re painted
 	 * @param row the row of the button
 	 * @param column the column of the button
 	 */
 	public void buttonPressed (int row, int column){
-		
+		if(isHoldingAPiece){
+			
+			pieces.remove(heldPiece);
+			heldPiece.setColumn(column);
+			heldPiece.setRow(row);
+			pieces.add(heldPiece);
+			repaintPieces();
+			
+			//Reset held piece
+			heldPiece = null;
+			isHoldingAPiece = false;
+		}
+		else{
+			if(pieceInAPosition(row,column) != null){
+				heldPiece = pieceInAPosition (row,column);
+				isHoldingAPiece = true;
+			}
+		}
 	}
 	/**
-	 * Finds the piece that is ocuppying a especific row and column
+	 * Finds the piece that is occupying a especific row and column
 	 * @param row the row integer
 	 * @param column the column integer
-	 * @return the piece object ocuppying that row and column. If empty, returns null
+	 * @return the piece object occupying that row and column. If empty, returns null
 	 */
 	public Piece pieceInAPosition (int row, int column){
 		for (Piece piece : pieces){
@@ -257,6 +274,19 @@ public class GraphicUI {
 				return piece;
 		}
 		return null;
+	}
+	
+	public void clearBoard (){
+		for(int i = 0; i < 8 ; i++){
+			for(int j = 0 ; j < 8; j++){
+				chessBoardButtons[i][j].setIcon(null);
+			}
+			
+		}
+	}
+	public void repaintPieces(){
+		clearBoard();
+		paintPieces();
 	}
 
 	
