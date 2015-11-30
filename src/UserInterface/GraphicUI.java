@@ -26,7 +26,6 @@ public class GraphicUI {
 	public boolean isHoldingAPiece = false;
 	public Piece heldPiece = null;
 	public JPanel ChessBoard = null;
-	public JPanel GamePanel = null;
 	public ChessGUI Chess = null;
 
 	/**
@@ -74,7 +73,6 @@ public class GraphicUI {
 		btnNewGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//Generate the Game Panel, which includes the Board and the extra game information
-				GamePanel = new JPanel(new BorderLayout());
 				Chess =  new ChessGUI(frame);
 			}
 		});
