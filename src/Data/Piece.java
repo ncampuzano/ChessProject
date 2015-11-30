@@ -11,6 +11,7 @@ public class Piece {
 	private int Type;
 	private int Row;
 	private int Column;
+	private boolean isCapture = false;
 
 	//Constants used to identify the type of piece
 	public static final int TYPE_ROOK = 1;
@@ -25,9 +26,17 @@ public class Piece {
     	this.IsWhite = isWhite;
     	this.Row = row;
     	this.Column = column;
-    	this.PieceImage = getImageForPiece (IsWhite,Type);
+    	this.PieceImage = getImageForPiece(IsWhite,Type);
     }
 	
+	public boolean isCapture() {
+		return isCapture;
+	}
+
+	public void setCapture(boolean isCapture) {
+		this.isCapture = isCapture;
+	}
+
 	public int getColumn() {
 		return Column;
 	}
