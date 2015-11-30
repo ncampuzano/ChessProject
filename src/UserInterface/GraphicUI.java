@@ -27,7 +27,7 @@ public class GraphicUI {
 	public Piece heldPiece = null;
 	public JPanel ChessBoard = null;
 	public ChessGUI Chess = null;
-
+	
 	/**
 	 * Launch the application.
 	 */
@@ -103,8 +103,14 @@ public class GraphicUI {
 		
 		JLabel lblPlaceholdertext = new JLabel("PlaceHolderText");
 		toolBar.add(lblPlaceholdertext);
-		
-		
+		JButton btnChangeGameState = new JButton("change");
+        btnChangeGameState.addActionListener(new ActionListener() {
+        			public void actionPerformed(ActionEvent e) {
+        				Chess.changeGameState();
+        			}
+        		});
+        btnChangeGameState.setBounds(0, 0, 80, 30);
+        toolBar.add(btnChangeGameState);
 		
 	}
 }

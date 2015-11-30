@@ -23,6 +23,10 @@ public class ChessGUI {
 	private JPanel GamePanel = null;
 	private boolean isHoldingAPiece = false;
 	private Piece heldPiece = null;
+	private int gameState = GAME_STATE_WHITE;
+    static final int GAME_STATE_WHITE = 0;
+    static final int GAME_STATE_BLACK = 1;
+    private JLabel lblGameState;
 	
 	public ChessGUI(JFrame frame){
 		//Generate the Game Panel, which includes the Board and the extra game information
@@ -32,10 +36,11 @@ public class ChessGUI {
 		//TODO - Display Captured pieces
 		//TODO - Show available promotions when a Pawn reaches the end row
 		//TODO - Other Info (Game notation?)
-		JLabel lblCapturasPromocionesEtc = new JLabel("Capturas, Promociones, etc");
-		GamePanel.add(lblCapturasPromocionesEtc, BorderLayout.WEST);
+		String labelText = this.getGameStateAsText();
+		lblGameState = new JLabel(labelText);
+		GamePanel.add(lblGameState, BorderLayout.WEST);
 		
-
+		
 		//Instance the basic ChessBoard
 		chessBoardButtons = setBasicChessBoardButtons();
 		ChessBoard = setChessBoard(chessBoardButtons);
@@ -51,6 +56,34 @@ public class ChessGUI {
 	 * Generates the basic background-colored array of buttons
 	 * @return an 8x8 array of buttons with just colored backgrounds
 	 */
+	private String getGameStateAsText() {
+        return (this.gameState == GAME_STATE_BLACK ? "black" : "white");
+    }
+ 
+    /**
+     * switches between the different game states 
+     */
+    public void changeGameState() {
+        switch (this.gameState) {
+            case GAME_STATE_BLACK:
+                this.gameState = GAME_STATE_WHITE;
+                break;
+            case GAME_STATE_WHITE:
+                this.gameState = GAME_STATE_BLACK;
+                break;
+            default:
+                throw new IllegalStateException("unknown game state:" + this.gameState);
+        }
+        lblGameState.setText(this.getGameStateAsText());
+    }
+ 
+    /**
+     * @return current game state
+     */
+    public int getGameState() {
+        return this.gameState;
+    }
+    
 	public JButton[][] setBasicChessBoardButtons (){
 		//Generates an 8x8 Array of buttons and saves them 
 		for (int i = 0; i < 8; i++){
@@ -85,8 +118,8 @@ public class ChessGUI {
 	public JPanel setChessBoard(JButton[][] chessBoardButtons){
 		//Generate a 9x9 JPanel (First row and column for notation (l to r :ABCDEFGH) (bot to top: 12345678)
 		JPanel ChessBoard = new JPanel();
-
-		ChessBoard.setLayout(new GridLayout(0, 9));
+		
+		ChessBoard.setLayout(new GridLayout(0,9));
 		
 		ChessBoard.add(new JLabel(""));
 		for (int i = (int)'A'; i < (int)'A'+8; i++)
