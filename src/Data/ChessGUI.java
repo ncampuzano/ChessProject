@@ -58,7 +58,7 @@ public class ChessGUI {
 	 * @return an 8x8 array of buttons with just colored backgrounds
 	 */
 	private String getGameStateAsText() {
-        return (this.gameState == GAME_STATE_BLACK ? "Juegan negras" : "Juegan blancas");
+        return (this.gameState == GAME_STATE_WHITE ? "Juegan blancas" : "Juegan negras");
     }
  
     /**
@@ -66,11 +66,11 @@ public class ChessGUI {
      */
     public void changeGameState() {
         switch (this.gameState) {
-            case GAME_STATE_BLACK:
-                this.gameState = GAME_STATE_WHITE;
-                break;
             case GAME_STATE_WHITE:
                 this.gameState = GAME_STATE_BLACK;
+                break;
+            case GAME_STATE_BLACK:
+                this.gameState = GAME_STATE_WHITE;
                 break;
             default:
                 throw new IllegalStateException("unknown game state:" + this.gameState);

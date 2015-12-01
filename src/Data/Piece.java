@@ -6,7 +6,7 @@ import javax.swing.ImageIcon;
 
 public class Piece {
 	private Image PieceImage;
-	private boolean IsWhite;
+	private boolean White;
 	private String Name;
 	private int Type;
 	private int Row;
@@ -23,10 +23,10 @@ public class Piece {
     
     public Piece(boolean isWhite, int type, int row, int column){
     	this.Type = type;
-    	this.IsWhite = isWhite;
+    	this.White = isWhite;
     	this.Row = row;
     	this.Column = column;
-    	this.PieceImage = getImageForPiece(IsWhite,Type);
+    	this.PieceImage = getImageForPiece(White,Type);
     }
 	
 	public boolean isCapture() {
@@ -60,10 +60,10 @@ public class Piece {
 		PieceImage = pieceImage;
 	}
 	public boolean isIsWhite() {
-		return IsWhite;
+		return White;
 	}
 	public void setIsWhite(boolean isWhite) {
-		IsWhite = isWhite;
+		White = isWhite;
 	}
 	public String getName() {
 		return Name;
