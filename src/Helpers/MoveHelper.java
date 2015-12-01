@@ -1,5 +1,7 @@
 package Helpers;
 
+import javax.swing.JButton;
+
 import Data.ChessGUI;
 import Data.Piece;
 
@@ -12,6 +14,12 @@ public class MoveHelper {
 	
 	public void EnableMovements(int row, int col, int type){
 		
+		for(JButton[] pieceRows : Chess.getChessBoardButtons())
+		{
+			for(JButton piece : pieceRows){
+				piece.setEnabled(false);
+			}
+		}
 		switch (type) {
         case Piece.TYPE_BISHOP:
         	EnableBishopMovements();

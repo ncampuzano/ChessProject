@@ -27,12 +27,13 @@ public class ChessGUI {
     static final int GAME_STATE_WHITE = 1;
     static final int GAME_STATE_BLACK = 0;
     public JLabel lblGameState;
+    private Helpers.MoveHelper MoveHelper ;
 	
 	public ChessGUI(JFrame frame){
 		//Generate the Game Panel, which includes the Board and the extra game information
 		GamePanel = new JPanel(new BorderLayout());
 		frame.getContentPane().add(GamePanel, BorderLayout.CENTER);
-		
+		MoveHelper = new Helpers.MoveHelper(this);
 		//TODO - Display Captured pieces
 		//TODO - Show available promotions when a Pawn reaches the end row
 		//TODO - Other Info (Game notation?)
