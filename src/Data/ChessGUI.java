@@ -109,6 +109,7 @@ public class ChessGUI {
 				chessBoardButtons[i][j].addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						buttonPressed(8-temp, temp2+1);
+						
 					}
 				});
 			}
@@ -147,7 +148,7 @@ public class ChessGUI {
 	
 	public void buttonPressed (int row, int column){
 		if(isHoldingAPiece){
-			
+			MoveHelper.EnableMovements(row, column, pieceInAPosition(row,column).getType(), gameState);
 			pieces.remove(heldPiece);
 			heldPiece.setColumn(column);
 			heldPiece.setRow(row);
