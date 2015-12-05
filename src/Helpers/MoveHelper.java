@@ -60,14 +60,9 @@ public class MoveHelper {
 		}
 	}
 	public void EnableRookMovements(){
-		System.out.println("finding piece");
-		Piece rook = Chess.pieceInAPosition(Row, Col);
-		System.out.println("rook choosen");
 		//Izquierda
 		for(int i = Col-1; i >=  0;  i--){
 			if(Chess.isThereAPieceInPosition(Row, i)){
-				System.out.println("Pieza a la izquierda");
-//				i=0;
 				break;
 			}
 			Pieces[Row][i].setEnabled(true);
@@ -75,8 +70,6 @@ public class MoveHelper {
 		//Derecha
 		for(int i = Col+1; i < 8;  i++){
 			if(Chess.isThereAPieceInPosition(Row, i)){
-				System.out.println("Pieza a la derecha");
-//				i=0;
 				break;
 			}
 			Pieces[Row][i].setEnabled(true);
@@ -84,17 +77,13 @@ public class MoveHelper {
 		//Arriba
 		for(int i = Row-1; i >= 0;  i--){
 			if(Chess.isThereAPieceInPosition(i, Col)){
-				System.out.println("Pieza arriba");
-//				i=0;
 				break;
 			}
 			Pieces[i][Col].setEnabled(true);
 		}
 		//Abajo
 		for(int i = Row+1; i < 8;  i++){
-			if( Chess.isThereAPieceInPosition(i, Col) ){
-				System.out.println("Pieza abajo");
-//				i=0;
+			if(Chess.isThereAPieceInPosition(i, Col) ){
 				break;
 			}
 			Pieces[i][Col].setEnabled(true);
@@ -123,7 +112,34 @@ public class MoveHelper {
 		
 	}
 	public void EnableBishopMovements(){
-		
+		//NW
+		for(int i = 1; Col-i>=0 && Row-i >= 0;  i++){
+			if(Chess.isThereAPieceInPosition(Row-i, Col-i)){
+				break;
+			}
+			Pieces[Row-i][Col-i].setEnabled(true);
+		}
+		//NE
+		for(int i = 1; Col+i<=7 && Row-i >= 0;  i++){
+			if(Chess.isThereAPieceInPosition(Row-i, Col+i)){
+				break;
+			}
+			Pieces[Row-i][Col+i].setEnabled(true);
+		}
+		//SW
+		for(int i = 1; Col-i>=0 && Row+i <= 7;  i++){
+			if(Chess.isThereAPieceInPosition(Row+i, Col-i)){
+				break;
+			}
+			Pieces[Row+i][Col-i].setEnabled(true);
+		}
+		//SE
+		for(int i = 1; Col+i<=7 && Row+i <= 7;  i++){
+			if(Chess.isThereAPieceInPosition(Row+i, Col+i)){
+				break;
+			}
+			Pieces[Row+i][Col+i].setEnabled(true);
+		}
 	}
 	
 }
