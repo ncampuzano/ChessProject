@@ -59,12 +59,18 @@ public class MoveHelper {
 			}
 		}
 	}
+	public boolean isEnemyPiece(Piece movingPiece,int row, int column){
+		if(Chess.pieceInAPosition(row,column).isWhite() != movingPiece.isWhite() ){
+			return true;
+		}
+		return false;
+	}
 	public void EnableRookMovements(){
 		Piece rook = Chess.pieceInAPosition(Row, Col);
 		//Izquierda
 		for(int i = 1; Col-i >=  0;  i++){
 			if(Chess.isThereAPieceInPosition(Row,Col-i)){
-				if(Chess.pieceInAPosition(Row,Col-i).isWhite() != rook.isWhite() ){
+				if( isEnemyPiece(rook, Row, Col-i) ){
 					Pieces[Row][Col-i].setEnabled(true);
 				}
 				break;
@@ -74,7 +80,7 @@ public class MoveHelper {
 		//Derecha
 		for(int i = 1; Col+i < 8;  i++){
 			if(Chess.isThereAPieceInPosition(Row, Col+i)){
-				if(Chess.pieceInAPosition(Row,Col+i).isWhite() != rook.isWhite() ){
+				if( isEnemyPiece(rook, Row, Col+i) ){
 					Pieces[Row][Col+i].setEnabled(true);
 				}
 				break;
@@ -84,7 +90,7 @@ public class MoveHelper {
 		//Arriba
 		for(int i = 1; Row-i >= 0;  i++){
 			if(Chess.isThereAPieceInPosition(Row-i, Col)){
-				if(Chess.pieceInAPosition(Row-i,Col).isWhite() != rook.isWhite() ){
+				if( isEnemyPiece(rook, Row-i, Col) ){
 					Pieces[Row-i][Col].setEnabled(true);
 				}
 				break;
@@ -94,7 +100,7 @@ public class MoveHelper {
 		//Abajo
 		for(int i = 1; Row+i < 8;  i++){
 			if(Chess.isThereAPieceInPosition(Row+i, Col) ){
-				if(Chess.pieceInAPosition(Row+i,Col).isWhite() != rook.isWhite() ){
+				if( isEnemyPiece(rook, Row+i, Col) ){
 					Pieces[Row+i][Col].setEnabled(true);
 				}
 				break;
@@ -109,6 +115,14 @@ public class MoveHelper {
 	public void EnablePawnMovements(){
 		Piece pawn = Chess.pieceInAPosition(Row,Col);
 		if(pawn.isWhite()){
+			//Check both attacking squares
+			if(Chess.isThereAPieceInPosition(Row+1, Col+1) && isEnemyPiece(pawn, Row+1, Col+1)){
+				Pieces[Row+1][Col+1].setEnabled(true);
+			}
+			if(Chess.isThereAPieceInPosition(Row+1, Col-1) && isEnemyPiece(pawn, Row+1, Col-1)){
+				Pieces[Row+1][Col-1].setEnabled(true);
+			}
+			//Check normal movement
 			if(!Chess.isThereAPieceInPosition(Row+1, Col)){
 				Pieces[Row+1][Col].setEnabled(true);
 				if(pawn.getRow() == 1){
@@ -117,8 +131,17 @@ public class MoveHelper {
 					}
 				}
 			}
+			
 		}
 		else{
+			
+			if(Chess.isThereAPieceInPosition(Row-1, Col+1) && isEnemyPiece(pawn, Row-1, Col+1)){
+				Pieces[Row-1][Col+1].setEnabled(true);
+			}
+			if(Chess.isThereAPieceInPosition(Row-1, Col-1) && isEnemyPiece(pawn, Row-1, Col-1)){
+				Pieces[Row-1][Col-1].setEnabled(true);
+			}
+			
 			if(!Chess.isThereAPieceInPosition(Row-1, Col)){
 				Pieces[Row-1][Col].setEnabled(true);
 				if(pawn.getRow() == 6){
