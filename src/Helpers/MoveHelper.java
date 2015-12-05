@@ -117,7 +117,34 @@ public class MoveHelper {
 		}
 	}
 	public void EnableKnightMovements(){
-		
+		//North
+		if(Row-2 >= 0){
+			if(!Chess.isThereAPieceInPosition(Row-2, Col+1) && (Col+1) <= 7)
+				Pieces[Row-2][Col+1].setEnabled(true);
+			if(!Chess.isThereAPieceInPosition(Row-2, Col-1) && (Col-1) >= 0)
+				Pieces[Row-2][Col-1].setEnabled(true);
+		}
+		//South
+		if(Row+2 <= 7){
+			if(!Chess.isThereAPieceInPosition(Row+2, Col+1) && (Col+1) <= 7)
+				Pieces[Row+2][Col+1].setEnabled(true);
+			if(!Chess.isThereAPieceInPosition(Row+2, Col-1) && (Col-1) >= 0)
+				Pieces[Row+2][Col-1].setEnabled(true);
+		}
+		//East
+		if(Col+2 <= 7){
+			if(!Chess.isThereAPieceInPosition(Row-1, Col+2) && (Row-1) >= 0)
+				Pieces[Row-1][Col+2].setEnabled(true);
+			if(!Chess.isThereAPieceInPosition(Row+1, Col+2) && (Row+1) <= 7)
+				Pieces[Row+1][Col+2].setEnabled(true);
+		}
+		//West
+		if(Col-2 >= 0){
+			if(!Chess.isThereAPieceInPosition(Row-1, Col-2) && (Row-1) >= 0)
+				Pieces[Row-1][Col-2].setEnabled(true);
+			if(!Chess.isThereAPieceInPosition(Row+1, Col-2) && (Row+1) <= 7)
+				Pieces[Row+1][Col-2].setEnabled(true);
+		}
 	}
 	public void EnableKingMovements(){
 		
