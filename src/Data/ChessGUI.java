@@ -177,6 +177,8 @@ public class ChessGUI {
 				capturedPieces.add(pieceInAPosition(row,column));
 				pieces.remove(pieceInAPosition(row,column));
 			}
+			if(heldPiece.getColumn() != column || heldPiece.getRow() != row)
+				changeGameState();
 			heldPiece.setColumn(column);
 			heldPiece.setRow(row);
 			pieces.add(heldPiece);
