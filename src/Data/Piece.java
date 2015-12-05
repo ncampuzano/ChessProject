@@ -59,10 +59,10 @@ public class Piece {
 	public void setPieceImage(Image pieceImage) {
 		PieceImage = pieceImage;
 	}
-	public boolean isIsWhite() {
+	public boolean isWhite() {
 		return White;
 	}
-	public void setIsWhite(boolean isWhite) {
+	public void setWhite(boolean isWhite) {
 		White = isWhite;
 	}
 	public String getName() {

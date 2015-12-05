@@ -109,7 +109,7 @@ public class ChessGUI {
 
 				chessBoardButtons[i][j].addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						buttonPressed(8-temp, temp2+1);
+						buttonPressed(temp, temp2);
 						
 					}
 				});
@@ -149,12 +149,12 @@ public class ChessGUI {
 	
 	public void buttonPressed (int row, int column){
 		if(isHoldingAPiece){
-//			MoveHelper.EnableMovements(row, column, pieceInAPosition(row,column).getType(), gameState);
 			pieces.remove(heldPiece);
 			heldPiece.setColumn(column);
 			heldPiece.setRow(row);
 			pieces.add(heldPiece);
 			repaintPieces();
+			MoveHelper.reEnableAll();
 			
 			//Reset held piece
 			heldPiece = null;
@@ -162,6 +162,7 @@ public class ChessGUI {
 		}
 		else{
 			if(pieceInAPosition(row,column) != null && canPieceMove(pieceInAPosition(row,column))){
+				MoveHelper.EnableMovements(row, column, pieceInAPosition(row,column).getType(), gameState);
 				heldPiece = pieceInAPosition (row,column);
 				isHoldingAPiece = true;
 			}
@@ -171,31 +172,31 @@ public class ChessGUI {
 	
 	public void initializePieces(){
 		//White pieces
-		pieces.add(new Piece (true,Piece.TYPE_ROOK  ,1,1));
-		pieces.add(new Piece (true,Piece.TYPE_KNIGHT,1,2));
-		pieces.add(new Piece (true,Piece.TYPE_BISHOP,1,3));
-		pieces.add(new Piece (true,Piece.TYPE_QUEEN ,1,4));
-		pieces.add(new Piece (true,Piece.TYPE_KING  ,1,5));
-		pieces.add(new Piece (true,Piece.TYPE_BISHOP,1,6));
-		pieces.add(new Piece (true,Piece.TYPE_KNIGHT,1,7));
-		pieces.add(new Piece (true,Piece.TYPE_ROOK  ,1,8));
+		pieces.add(new Piece (true,Piece.TYPE_ROOK  ,0,0));
+		pieces.add(new Piece (true,Piece.TYPE_KNIGHT,0,1));
+		pieces.add(new Piece (true,Piece.TYPE_BISHOP,0,2));
+		pieces.add(new Piece (true,Piece.TYPE_QUEEN ,0,3));
+		pieces.add(new Piece (true,Piece.TYPE_KING  ,0,4));
+		pieces.add(new Piece (true,Piece.TYPE_BISHOP,0,5));
+		pieces.add(new Piece (true,Piece.TYPE_KNIGHT,0,6));
+		pieces.add(new Piece (true,Piece.TYPE_ROOK  ,0,7));
 		//White Pawns
-		for (int i = 1; i < 9; i++){
-			pieces.add(new Piece (true,Piece.TYPE_PAWN,2,i));
+		for (int i = 0; i < 8; i++){
+			pieces.add(new Piece (true,Piece.TYPE_PAWN,1,i));
 		}
 		
 		//Black pieces
-		pieces.add(new Piece (false,Piece.TYPE_ROOK  ,8,1));
-		pieces.add(new Piece (false,Piece.TYPE_KNIGHT,8,2));
-		pieces.add(new Piece (false,Piece.TYPE_BISHOP,8,3));
-		pieces.add(new Piece (false,Piece.TYPE_KING  ,8,4));
-		pieces.add(new Piece (false,Piece.TYPE_QUEEN ,8,5));
-		pieces.add(new Piece (false,Piece.TYPE_BISHOP,8,6));
-		pieces.add(new Piece (false,Piece.TYPE_KNIGHT,8,7));
-		pieces.add(new Piece (false,Piece.TYPE_ROOK  ,8,8));
+		pieces.add(new Piece (false,Piece.TYPE_ROOK  ,7,0));
+		pieces.add(new Piece (false,Piece.TYPE_KNIGHT,7,1));
+		pieces.add(new Piece (false,Piece.TYPE_BISHOP,7,2));
+		pieces.add(new Piece (false,Piece.TYPE_KING  ,7,3));
+		pieces.add(new Piece (false,Piece.TYPE_QUEEN ,7,4));
+		pieces.add(new Piece (false,Piece.TYPE_BISHOP,7,5));
+		pieces.add(new Piece (false,Piece.TYPE_KNIGHT,7,6));
+		pieces.add(new Piece (false,Piece.TYPE_ROOK  ,7,7));
 		//Black Pawns
-		for (int i = 1; i < 9; i++){
-			pieces.add(new Piece (false,Piece.TYPE_PAWN,7,i));
+		for (int i = 0; i < 8; i++){
+			pieces.add(new Piece (false,Piece.TYPE_PAWN,6,i));
 		}
 	}
 	
@@ -205,7 +206,7 @@ public class ChessGUI {
 			if (piece.getRow() == row && piece.getColumn() == column)
 				return piece;
 		}
-		return null;
+		throw new IllegalStateException("No piece in square " + row + " : " +  column);
 	}
 	
 	
@@ -221,7 +222,7 @@ public class ChessGUI {
 	
 	public void paintPieces(){
 		for(Piece piece : pieces){
-			chessBoardButtons[8-(piece.getRow())][piece.getColumn()-1].setIcon(new ImageIcon(piece.getPieceImage())); 
+			chessBoardButtons[piece.getRow()][piece.getColumn()].setIcon(new ImageIcon(piece.getPieceImage())); 
 		}
 	}
 	
@@ -232,7 +233,7 @@ public class ChessGUI {
 	}
 	
 	public boolean canPieceMove(Piece piece){
-		if((piece.isIsWhite() ? 1 : 0) == gameState ){
+		if((piece.isWhite() ? 1 : 0) == gameState ){
 			return true;
 		}
 		return false;
