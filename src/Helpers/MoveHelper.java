@@ -180,7 +180,31 @@ public class MoveHelper {
 		}
 	}
 	public void EnableKingMovements(){
-		
+		Piece king = Chess.pieceInAPosition(Row, Col);
+		if( (!Chess.isThereAPieceInPosition(Row+1, Col+1) || isEnemyPiece(king, Row+1, Col+1) ) && (Row+1) <= 7  && (Col+1) <= 7){
+			Pieces[Row+1][Col+1].setEnabled(true);
+		}
+		if( (!Chess.isThereAPieceInPosition(Row+1, Col) || isEnemyPiece(king, Row+1, Col) ) && (Row+1) <= 7){
+			Pieces[Row+1][Col].setEnabled(true);
+		}
+		if( (!Chess.isThereAPieceInPosition(Row+1, Col-1) || isEnemyPiece(king, Row+1, Col-1) ) && (Row+1) <= 7 && (Col-1) >= 0){
+			Pieces[Row+1][Col-1].setEnabled(true);
+		}
+		if( (!Chess.isThereAPieceInPosition(Row-1, Col+1) || isEnemyPiece(king, Row-1, Col+1) ) && (Row-1) >= 0 && (Col+1) <= 7){
+			Pieces[Row-1][Col+1].setEnabled(true);
+		}
+		if( (!Chess.isThereAPieceInPosition(Row-1, Col) || isEnemyPiece(king, Row-1, Col) ) && (Row-1) >= 0 ){
+			Pieces[Row-1][Col].setEnabled(true);
+		}
+		if( (!Chess.isThereAPieceInPosition(Row-1, Col-1) || isEnemyPiece(king, Row-1, Col-1) ) && (Row-1) >= 0 && (Col-1) >= 0){
+			Pieces[Row-1][Col-1].setEnabled(true);
+		}
+		if( (!Chess.isThereAPieceInPosition(Row, Col+1) || isEnemyPiece(king, Row, Col+1) ) && (Col+1) <= 7){
+			Pieces[Row][Col+1].setEnabled(true);
+		}
+		if( (!Chess.isThereAPieceInPosition(Row, Col-1) || isEnemyPiece(king, Row, Col-1) ) && (Col-1) >= 0){
+			Pieces[Row][Col-1].setEnabled(true);
+		}
 	}
 	public void EnableBishopMovements(){
 		//NW
@@ -225,5 +249,4 @@ public class MoveHelper {
 			Pieces[Row+i][Col+i].setEnabled(true);
 		}
 	}
-	
 }
