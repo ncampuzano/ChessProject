@@ -90,7 +90,8 @@ public class MoveHelper {
 		}
 	}
 	public void EnableQueenMovements(){
-		
+		EnableRookMovements();
+		EnableBishopMovements();
 	}
 	public void EnablePawnMovements(){
 		Piece pawn = Chess.pieceInAPosition(Row,Col);
