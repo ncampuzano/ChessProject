@@ -18,6 +18,7 @@ import javax.swing.SwingConstants;
 public class ChessGUI {
 
 	private List<Piece> pieces = new ArrayList<>();
+	private List<Piece> capturedPieces = new ArrayList<>();
 	private JButton[][] chessBoardButtons = new JButton [8][8];
 	private JPanel ChessBoard = null;
 	private JPanel GamePanel = null;
@@ -171,12 +172,18 @@ public class ChessGUI {
 	public void buttonPressed (int row, int column){
 		if(isHoldingAPiece){
 			pieces.remove(heldPiece);
+			if(isThereAPieceInPosition(row, column)){
+				pieceInAPosition(row, column).setCapture(true);
+				capturedPieces.add(pieceInAPosition(row,column));
+				pieces.remove(pieceInAPosition(row,column));
+			}
 			heldPiece.setColumn(column);
 			heldPiece.setRow(row);
 			pieces.add(heldPiece);
 			repaintPieces();
 			MoveHelper.reEnableAll();
 			setBasicChessBackgrounds();
+			
 			
 			//Reset held piece
 			heldPiece = null;

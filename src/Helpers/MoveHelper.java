@@ -64,9 +64,9 @@ public class MoveHelper {
 		//Izquierda
 		for(int i = 1; Col-i >=  0;  i++){
 			if(Chess.isThereAPieceInPosition(Row,Col-i)){
-//				if(Chess.pieceInAPosition(Row,Col-i).isWhite() != rook.isWhite() ){
-//					Pieces[Row][Col-i].setEnabled(true);
-//				}
+				if(Chess.pieceInAPosition(Row,Col-i).isWhite() != rook.isWhite() ){
+					Pieces[Row][Col-i].setEnabled(true);
+				}
 				break;
 			}
 			Pieces[Row][Col-i].setEnabled(true);
@@ -74,9 +74,9 @@ public class MoveHelper {
 		//Derecha
 		for(int i = 1; Col+i < 8;  i++){
 			if(Chess.isThereAPieceInPosition(Row, Col+i)){
-//				if(Chess.pieceInAPosition(Row,Col+i).isWhite() != rook.isWhite() ){
-//					Pieces[Row][Col+i].setEnabled(true);
-//				}
+				if(Chess.pieceInAPosition(Row,Col+i).isWhite() != rook.isWhite() ){
+					Pieces[Row][Col+i].setEnabled(true);
+				}
 				break;
 			}
 			Pieces[Row][Col+i].setEnabled(true);
@@ -84,9 +84,9 @@ public class MoveHelper {
 		//Arriba
 		for(int i = 1; Row-i >= 0;  i++){
 			if(Chess.isThereAPieceInPosition(Row-i, Col)){
-//				if(Chess.pieceInAPosition(Row-i,Col).isWhite() != rook.isWhite() ){
-//					Pieces[Row-i][Col].setEnabled(true);
-//				}
+				if(Chess.pieceInAPosition(Row-i,Col).isWhite() != rook.isWhite() ){
+					Pieces[Row-i][Col].setEnabled(true);
+				}
 				break;
 			}
 			Pieces[Row-i][Col].setEnabled(true);
@@ -94,9 +94,9 @@ public class MoveHelper {
 		//Abajo
 		for(int i = 1; Row+i < 8;  i++){
 			if(Chess.isThereAPieceInPosition(Row+i, Col) ){
-//				if(Chess.pieceInAPosition(Row+i,Col).isWhite() != rook.isWhite() ){
-//					Pieces[Row+i][Col].setEnabled(true);
-//				}
+				if(Chess.pieceInAPosition(Row+i,Col).isWhite() != rook.isWhite() ){
+					Pieces[Row+i][Col].setEnabled(true);
+				}
 				break;
 			}
 			Pieces[Row+i][Col].setEnabled(true);
