@@ -29,7 +29,6 @@ public class MoveHelper {
 		}
 		Pieces[Row][Col].setEnabled(true);
 		
-		System.out.println("Disabled buttons");
 		switch (type) {
         case Piece.TYPE_BISHOP:
         	EnableBishopMovements();
@@ -51,6 +50,7 @@ public class MoveHelper {
             break;
 		}
 		
+		
 	}
 	public void reEnableAll(){
 		for (int i = 0; i < 8; i++){
@@ -60,33 +60,46 @@ public class MoveHelper {
 		}
 	}
 	public void EnableRookMovements(){
+		Piece rook = Chess.pieceInAPosition(Row, Col);
 		//Izquierda
-		for(int i = Col-1; i >=  0;  i--){
-			if(Chess.isThereAPieceInPosition(Row, i)){
+		for(int i = 1; Col-i >=  0;  i++){
+			if(Chess.isThereAPieceInPosition(Row,Col-i)){
+//				if(Chess.pieceInAPosition(Row,Col-i).isWhite() != rook.isWhite() ){
+//					Pieces[Row][Col-i].setEnabled(true);
+//				}
 				break;
 			}
-			Pieces[Row][i].setEnabled(true);
+			Pieces[Row][Col-i].setEnabled(true);
 		}
 		//Derecha
-		for(int i = Col+1; i < 8;  i++){
-			if(Chess.isThereAPieceInPosition(Row, i)){
+		for(int i = 1; Col+i < 8;  i++){
+			if(Chess.isThereAPieceInPosition(Row, Col+i)){
+//				if(Chess.pieceInAPosition(Row,Col+i).isWhite() != rook.isWhite() ){
+//					Pieces[Row][Col+i].setEnabled(true);
+//				}
 				break;
 			}
-			Pieces[Row][i].setEnabled(true);
+			Pieces[Row][Col+i].setEnabled(true);
 		}
 		//Arriba
-		for(int i = Row-1; i >= 0;  i--){
-			if(Chess.isThereAPieceInPosition(i, Col)){
+		for(int i = 1; Row-i >= 0;  i++){
+			if(Chess.isThereAPieceInPosition(Row-i, Col)){
+//				if(Chess.pieceInAPosition(Row-i,Col).isWhite() != rook.isWhite() ){
+//					Pieces[Row-i][Col].setEnabled(true);
+//				}
 				break;
 			}
-			Pieces[i][Col].setEnabled(true);
+			Pieces[Row-i][Col].setEnabled(true);
 		}
 		//Abajo
-		for(int i = Row+1; i < 8;  i++){
-			if(Chess.isThereAPieceInPosition(i, Col) ){
+		for(int i = 1; Row+i < 8;  i++){
+			if(Chess.isThereAPieceInPosition(Row+i, Col) ){
+//				if(Chess.pieceInAPosition(Row+i,Col).isWhite() != rook.isWhite() ){
+//					Pieces[Row+i][Col].setEnabled(true);
+//				}
 				break;
 			}
-			Pieces[i][Col].setEnabled(true);
+			Pieces[Row+i][Col].setEnabled(true);
 		}
 	}
 	public void EnableQueenMovements(){
