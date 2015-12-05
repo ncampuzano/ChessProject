@@ -10,43 +10,42 @@ public class MoveHelper {
 	private int Col;
 	private int Row;
 	private JButton[][] Pieces; 
-	private int GameState; 
 	
 	public MoveHelper(ChessGUI chess){
 		Chess = chess;
 		Pieces = Chess.getChessBoardButtons();
 	}
 	
-	public void EnableMovements(int row, int col, int type, int gameState){
-		Col = col;
-		Row = row;
-		GameState = gameState;
-		
+	public void disableAll(JButton[][] array){
 		for (int i = 0; i < 8; i++){
 			for (int j = 0; j < 8; j++){
-				Pieces[i][j].setEnabled(false);
+				array[i][j].setEnabled(false);
 			}
 		}
-		Pieces[Row][Col].setEnabled(true);
+	}
+	
+	public void EnableMovements(int row, int col, int type, JButton[][] Pieces){
+		Col = col;
+		Row = row;
 		
 		switch (type) {
         case Piece.TYPE_BISHOP:
-        	EnableBishopMovements();
+        	EnableBishopMovements(Pieces);
             break;
         case Piece.TYPE_KING:
-        	EnableKingMovements();
+        	EnableKingMovements(Pieces);
             break;
         case Piece.TYPE_KNIGHT:
-        	EnableKnightMovements();
+        	EnableKnightMovements(Pieces);
             break;
         case Piece.TYPE_PAWN:
-        	EnablePawnMovements();
+        	EnablePawnMovements(Pieces);
             break;
         case Piece.TYPE_QUEEN:
-        	EnableQueenMovements();
+        	EnableQueenMovements(Pieces);
             break;
         case Piece.TYPE_ROOK:
-        	EnableRookMovements();
+        	EnableRookMovements(Pieces);
             break;
 		}
 		
@@ -65,7 +64,7 @@ public class MoveHelper {
 		}
 		return false;
 	}
-	public void EnableRookMovements(){
+	public void EnableRookMovements(JButton[][] Pieces){
 		Piece rook = Chess.pieceInAPosition(Row, Col);
 		//Izquierda
 		for(int i = 1; Col-i >=  0;  i++){
@@ -108,11 +107,11 @@ public class MoveHelper {
 			Pieces[Row+i][Col].setEnabled(true);
 		}
 	}
-	public void EnableQueenMovements(){
-		EnableRookMovements();
-		EnableBishopMovements();
+	public void EnableQueenMovements(JButton[][] Pieces){
+		EnableRookMovements(Pieces);
+		EnableBishopMovements(Pieces);
 	}
-	public void EnablePawnMovements(){
+	public void EnablePawnMovements(JButton[][] Pieces){
 		Piece pawn = Chess.pieceInAPosition(Row,Col);
 		if(pawn.isWhite()){
 			//Check both attacking squares
@@ -148,7 +147,7 @@ public class MoveHelper {
 			}	
 		}
 	}
-	public void EnableKnightMovements(){
+	public void EnableKnightMovements(JButton[][] Pieces){
 		Piece knight = Chess.pieceInAPosition(Row, Col);
 		//North
 		if(Row-2 >= 0){
@@ -179,7 +178,7 @@ public class MoveHelper {
 				Pieces[Row+1][Col-2].setEnabled(true);
 		}
 	}
-	public void EnableKingMovements(){
+	public void EnableKingMovements(JButton[][] Pieces){
 		Piece king = Chess.pieceInAPosition(Row, Col);
 		if( (!Chess.isThereAPieceInPosition(Row+1, Col+1) || isEnemyPiece(king, Row+1, Col+1) ) && (Row+1) <= 7  && (Col+1) <= 7){
 			Pieces[Row+1][Col+1].setEnabled(true);
@@ -206,7 +205,7 @@ public class MoveHelper {
 			Pieces[Row][Col-1].setEnabled(true);
 		}
 	}
-	public void EnableBishopMovements(){
+	public void EnableBishopMovements(JButton[][] Pieces){
 		//NW
 		Piece bishop = Chess.pieceInAPosition(Row, Col);
 		for(int i = 1; Col-i>=0 && Row-i >= 0;  i++){
@@ -248,5 +247,14 @@ public class MoveHelper {
 			}
 			Pieces[Row+i][Col+i].setEnabled(true);
 		}
+	}
+	public JButton[][] squaresInDanger (int gameState){
+		JButton[][] dangerBoard = Chess.setBasicChessBoardButtons();
+		disableAll(dangerBoard);
+		for(Piece piece : Chess.getPieces()){
+			if( (piece.isWhite() ? 1 : 0) == gameState)
+				EnableMovements(piece.getRow(), piece.getColumn(), piece.getType(), dangerBoard);
+		}
+		return dangerBoard;
 	}
 }

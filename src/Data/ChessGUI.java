@@ -212,7 +212,9 @@ public class ChessGUI {
 		}
 		else{
 			if(pieceInAPosition(row,column) != null && canPieceMove(pieceInAPosition(row,column))){
-				MoveHelper.EnableMovements(row, column, pieceInAPosition(row,column).getType(), gameState);
+				MoveHelper.disableAll(chessBoardButtons);
+				chessBoardButtons[row][column].setEnabled(true);
+				MoveHelper.EnableMovements(row, column, pieceInAPosition(row,column).getType(), chessBoardButtons);
 				colorAvailableMoves();
 				heldPiece = pieceInAPosition (row,column);
 				isHoldingAPiece = true;
