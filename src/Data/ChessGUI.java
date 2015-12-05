@@ -50,8 +50,9 @@ public class ChessGUI {
 		initializePieces();
 		paintPieces();
 		
-		ChessBoard = setChessBoard(chessBoardButtons);
-		GamePanel.add(ChessBoard, BorderLayout.CENTER);
+	}
+	public void DestroyChessBoard(JFrame frame){
+		frame.getContentPane().remove(GamePanel);
 	}
 	
 	/**
@@ -148,7 +149,7 @@ public class ChessGUI {
 	
 	public void buttonPressed (int row, int column){
 		if(isHoldingAPiece){
-			MoveHelper.EnableMovements(row, column, pieceInAPosition(row,column).getType(), gameState);
+//			MoveHelper.EnableMovements(row, column, pieceInAPosition(row,column).getType(), gameState);
 			pieces.remove(heldPiece);
 			heldPiece.setColumn(column);
 			heldPiece.setRow(row);

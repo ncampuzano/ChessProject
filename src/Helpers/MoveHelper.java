@@ -11,6 +11,7 @@ public class MoveHelper {
 	private int Row;
 	private JButton[][] Pieces; 
 	private int GameState; 
+	
 	public MoveHelper(ChessGUI chess){
 		Chess = chess;
 		Pieces = Chess.getChessBoardButtons();
@@ -38,7 +39,7 @@ public class MoveHelper {
         	EnableQueenMovements();
             break;
         case Piece.TYPE_ROOK:
-        	for(JButton[] pieceRows :Pieces)
+        	for(JButton[] pieceRows : Pieces)
     		{
     			for(JButton piece : pieceRows){
     				piece.setEnabled(false);

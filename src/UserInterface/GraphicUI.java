@@ -73,6 +73,10 @@ public class GraphicUI {
 		btnNewGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//Generate the Game Panel, which includes the Board and the extra game information
+				if(Chess != null){
+					toolBar.remove(Chess.lblGameState);
+					Chess.DestroyChessBoard(frame);
+				}
 				Chess =  new ChessGUI(frame);
 				toolBar.add(Chess.lblGameState);
 			}
@@ -106,7 +110,8 @@ public class GraphicUI {
 		JButton btnChangeGameState = new JButton("change");
         btnChangeGameState.addActionListener(new ActionListener() {
         			public void actionPerformed(ActionEvent e) {
-        				Chess.changeGameState();
+        				if(Chess != null)
+        					Chess.changeGameState();
         			}
         		});
         toolBar.add(btnChangeGameState);
