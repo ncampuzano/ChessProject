@@ -27,6 +27,7 @@ public class ChessGUI {
 	private int gameState = GAME_STATE_WHITE;
     static final int GAME_STATE_WHITE = 1;
     static final int GAME_STATE_BLACK = 0;
+    static final int GAME_STATE_END = 2;
     public JLabel lblGameState;
     private Helpers.MoveHelper MoveHelper ;
 	
@@ -68,6 +69,15 @@ public class ChessGUI {
      * switches between the different game states 
      */
     public void changeGameState() {
+    	if(endGameConditionReached()){
+    		if(this.gameState == GAME_STATE_WHITE){
+    			lblGameState.setText("GAME OVER. WHITE WON!");
+    		}
+    		else{
+    			lblGameState.setText("GAME OVER. BLACK WON!");
+    		}
+    		this.gameState = GAME_STATE_END;
+    	}
         switch (this.gameState) {
             case GAME_STATE_WHITE:
                 this.gameState = GAME_STATE_BLACK;
@@ -79,6 +89,15 @@ public class ChessGUI {
                 throw new IllegalStateException("unknown game state:" + this.gameState);
         }
         lblGameState.setText(this.getGameStateAsText());
+    }
+    
+    public boolean endGameConditionReached(){
+    	for(Piece piece : capturedPieces){
+    		if(piece.getType() == Piece.TYPE_KING){
+    			return true;
+    		}
+    	}
+    	return false;
     }
  
     /**
