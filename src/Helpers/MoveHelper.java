@@ -125,10 +125,8 @@ public class MoveHelper {
 			//Check normal movement
 			if(!Chess.isThereAPieceInPosition(Row+1, Col)){
 				Pieces[Row+1][Col].setEnabled(true);
-				if(pawn.getRow() == 1){
-					if(!Chess.isThereAPieceInPosition(Row+2, Col)){
-						Pieces[Row+2][Col].setEnabled(true);
-					}
+				if(pawn.getRow() == 1 && !Chess.isThereAPieceInPosition(Row+2, Col)){
+					Pieces[Row+2][Col].setEnabled(true);
 				}
 			}
 			
@@ -144,41 +142,40 @@ public class MoveHelper {
 			
 			if(!Chess.isThereAPieceInPosition(Row-1, Col)){
 				Pieces[Row-1][Col].setEnabled(true);
-				if(pawn.getRow() == 6){
-					if(!Chess.isThereAPieceInPosition(Row-2, Col)){
-						Pieces[Row-2][Col].setEnabled(true);
-					}
+				if(pawn.getRow() == 6 && !Chess.isThereAPieceInPosition(Row-2, Col)){
+					Pieces[Row-2][Col].setEnabled(true);
 				}
 			}	
 		}
 	}
 	public void EnableKnightMovements(){
+		Piece knight = Chess.pieceInAPosition(Row, Col);
 		//North
 		if(Row-2 >= 0){
-			if(!Chess.isThereAPieceInPosition(Row-2, Col+1) && (Col+1) <= 7)
+			if( (!Chess.isThereAPieceInPosition(Row-2, Col+1) || isEnemyPiece(knight, Row-2, Col+1) ) && (Col+1) <= 7)
 				Pieces[Row-2][Col+1].setEnabled(true);
-			if(!Chess.isThereAPieceInPosition(Row-2, Col-1) && (Col-1) >= 0)
+			if( (!Chess.isThereAPieceInPosition(Row-2, Col-1) || isEnemyPiece(knight, Row-2, Col-1) ) && (Col-1) >= 0)
 				Pieces[Row-2][Col-1].setEnabled(true);
 		}
 		//South
 		if(Row+2 <= 7){
-			if(!Chess.isThereAPieceInPosition(Row+2, Col+1) && (Col+1) <= 7)
+			if( (!Chess.isThereAPieceInPosition(Row+2, Col+1) || isEnemyPiece(knight, Row+2, Col+1) ) && (Col+1) <= 7)
 				Pieces[Row+2][Col+1].setEnabled(true);
-			if(!Chess.isThereAPieceInPosition(Row+2, Col-1) && (Col-1) >= 0)
+			if( (!Chess.isThereAPieceInPosition(Row+2, Col-1) || isEnemyPiece(knight, Row+2, Col-1) ) && (Col-1) >= 0)
 				Pieces[Row+2][Col-1].setEnabled(true);
 		}
 		//East
 		if(Col+2 <= 7){
-			if(!Chess.isThereAPieceInPosition(Row-1, Col+2) && (Row-1) >= 0)
+			if( (!Chess.isThereAPieceInPosition(Row-1, Col+2) || isEnemyPiece(knight, Row-1, Col+2) ) && (Row-1) >= 0)
 				Pieces[Row-1][Col+2].setEnabled(true);
-			if(!Chess.isThereAPieceInPosition(Row+1, Col+2) && (Row+1) <= 7)
+			if( (!Chess.isThereAPieceInPosition(Row+1, Col+2) || isEnemyPiece(knight, Row+1, Col+2) ) && (Row+1) <= 7)
 				Pieces[Row+1][Col+2].setEnabled(true);
 		}
 		//West
 		if(Col-2 >= 0){
-			if(!Chess.isThereAPieceInPosition(Row-1, Col-2) && (Row-1) >= 0)
+			if( (!Chess.isThereAPieceInPosition(Row-1, Col-2) || isEnemyPiece(knight, Row-1, Col-2) ) && (Row-1) >= 0)
 				Pieces[Row-1][Col-2].setEnabled(true);
-			if(!Chess.isThereAPieceInPosition(Row+1, Col-2) && (Row+1) <= 7)
+			if( (!Chess.isThereAPieceInPosition(Row+1, Col-2) || isEnemyPiece(knight, Row+1, Col-2) )&& (Row+1) <= 7)
 				Pieces[Row+1][Col-2].setEnabled(true);
 		}
 	}
@@ -187,8 +184,12 @@ public class MoveHelper {
 	}
 	public void EnableBishopMovements(){
 		//NW
+		Piece bishop = Chess.pieceInAPosition(Row, Col);
 		for(int i = 1; Col-i>=0 && Row-i >= 0;  i++){
 			if(Chess.isThereAPieceInPosition(Row-i, Col-i)){
+				if( isEnemyPiece(bishop, Row-i, Col-i) ){
+					Pieces[Row-i][Col-i].setEnabled(true);
+				}
 				break;
 			}
 			Pieces[Row-i][Col-i].setEnabled(true);
@@ -196,6 +197,9 @@ public class MoveHelper {
 		//NE
 		for(int i = 1; Col+i<=7 && Row-i >= 0;  i++){
 			if(Chess.isThereAPieceInPosition(Row-i, Col+i)){
+				if( isEnemyPiece(bishop, Row-i, Col+i) ){
+					Pieces[Row-i][Col+i].setEnabled(true);
+				}
 				break;
 			}
 			Pieces[Row-i][Col+i].setEnabled(true);
@@ -203,6 +207,9 @@ public class MoveHelper {
 		//SW
 		for(int i = 1; Col-i>=0 && Row+i <= 7;  i++){
 			if(Chess.isThereAPieceInPosition(Row+i, Col-i)){
+				if( isEnemyPiece(bishop, Row+i, Col-i) ){
+					Pieces[Row+i][Col-i].setEnabled(true);
+				}
 				break;
 			}
 			Pieces[Row+i][Col-i].setEnabled(true);
@@ -210,6 +217,9 @@ public class MoveHelper {
 		//SE
 		for(int i = 1; Col+i<=7 && Row+i <= 7;  i++){
 			if(Chess.isThereAPieceInPosition(Row+i, Col+i)){
+				if( isEnemyPiece(bishop, Row+i, Col+i) ){
+					Pieces[Row+i][Col+i].setEnabled(true);
+				}
 				break;
 			}
 			Pieces[Row+i][Col+i].setEnabled(true);
