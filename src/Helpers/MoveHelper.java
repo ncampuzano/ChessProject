@@ -96,14 +96,24 @@ public class MoveHelper {
 	public void EnablePawnMovements(){
 		Piece pawn = Chess.pieceInAPosition(Row,Col);
 		if(pawn.isWhite()){
-			Pieces[Row+1][Col].setEnabled(true);
-			if(pawn.getRow() == 1)
-				Pieces[Row+2][Col].setEnabled(true);
+			if(!Chess.isThereAPieceInPosition(Row+1, Col)){
+				Pieces[Row+1][Col].setEnabled(true);
+				if(pawn.getRow() == 1){
+					if(!Chess.isThereAPieceInPosition(Row+2, Col)){
+						Pieces[Row+2][Col].setEnabled(true);
+					}
+				}
+			}
 		}
 		else{
-			Pieces[Row-1][Col].setEnabled(true);
-			if(pawn.getRow() == 6)
-				Pieces[Row-2][Col].setEnabled(true);
+			if(!Chess.isThereAPieceInPosition(Row-1, Col)){
+				Pieces[Row-1][Col].setEnabled(true);
+				if(pawn.getRow() == 6){
+					if(!Chess.isThereAPieceInPosition(Row-2, Col)){
+						Pieces[Row-2][Col].setEnabled(true);
+					}
+				}
+			}	
 		}
 	}
 	public void EnableKnightMovements(){
