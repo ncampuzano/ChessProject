@@ -117,7 +117,28 @@ public class ChessGUI {
 		}
 		return chessBoardButtons;
 	}
-	
+	public void setBasicChessBackgrounds(){
+		for(int i = 0; i<= 7; i++){
+			for(int j = 0; j<= 7; j++){
+				//Color each button the appropiate color
+				if((i+j)%2 == 0){
+					chessBoardButtons[i][j].setBackground(Color.WHITE);
+				}
+				else{
+					chessBoardButtons[i][j].setBackground(Color.GRAY);
+				}
+			}
+		}
+	}
+	public void colorAvailableMoves(){
+		for(int i = 0; i<= 7; i++){
+			for(int j = 0; j<= 7; j++){
+				if(chessBoardButtons[i][j].isEnabled()){
+					chessBoardButtons[i][j].setBackground(Color.YELLOW);
+				}
+			}
+		}
+	}
 	
 	public JPanel setChessBoard(JButton[][] chessBoardButtons){
 		//Generate a 9x9 JPanel (First row and column for notation (l to r :ABCDEFGH) (bot to top: 12345678)
@@ -155,6 +176,7 @@ public class ChessGUI {
 			pieces.add(heldPiece);
 			repaintPieces();
 			MoveHelper.reEnableAll();
+			setBasicChessBackgrounds();
 			
 			//Reset held piece
 			heldPiece = null;
@@ -163,6 +185,7 @@ public class ChessGUI {
 		else{
 			if(pieceInAPosition(row,column) != null && canPieceMove(pieceInAPosition(row,column))){
 				MoveHelper.EnableMovements(row, column, pieceInAPosition(row,column).getType(), gameState);
+				colorAvailableMoves();
 				heldPiece = pieceInAPosition (row,column);
 				isHoldingAPiece = true;
 			}
