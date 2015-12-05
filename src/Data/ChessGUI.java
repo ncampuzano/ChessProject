@@ -199,14 +199,21 @@ public class ChessGUI {
 			pieces.add(new Piece (false,Piece.TYPE_PAWN,6,i));
 		}
 	}
-	
+	public boolean isThereAPieceInPosition(int row, int column){
+		for(Piece piece : pieces){
+			if(piece.getRow() == row && piece.getColumn() == column){
+				return true;
+			}
+		}
+		return false;
+	}
 	
 	public Piece pieceInAPosition (int row, int column){
 		for (Piece piece : pieces){
 			if (piece.getRow() == row && piece.getColumn() == column)
 				return piece;
 		}
-		throw new IllegalStateException("No piece in square " + row + " : " +  column);
+		return null;
 	}
 	
 	

@@ -63,24 +63,40 @@ public class MoveHelper {
 		System.out.println("finding piece");
 		Piece rook = Chess.pieceInAPosition(Row, Col);
 		System.out.println("rook choosen");
-		for(int i = Col; i >=  0;  i--){
-			if(rook.isWhite() == Chess.pieceInAPosition(Row, i).isWhite())
+		//Izquierda
+		for(int i = Col-1; i >=  0;  i--){
+			if(Chess.isThereAPieceInPosition(Row, i)){
+				System.out.println("Pieza a la izquierda");
+//				i=0;
 				break;
+			}
 			Pieces[Row][i].setEnabled(true);
 		}
-		for(int i = Col; i <  8;  i++){
-			if(rook.isWhite() == Chess.pieceInAPosition(Row, i).isWhite())
+		//Derecha
+		for(int i = Col+1; i < 8;  i++){
+			if(Chess.isThereAPieceInPosition(Row, i)){
+				System.out.println("Pieza a la derecha");
+//				i=0;
 				break;
+			}
 			Pieces[Row][i].setEnabled(true);
 		}
-		for(int i = Row; i >= 0;  i--){
-			if(rook.isWhite() == Chess.pieceInAPosition(i, Col).isWhite())
+		//Arriba
+		for(int i = Row-1; i >= 0;  i--){
+			if(Chess.isThereAPieceInPosition(i, Col)){
+				System.out.println("Pieza arriba");
+//				i=0;
 				break;
+			}
 			Pieces[i][Col].setEnabled(true);
 		}
-		for(int i = Row; i < 8;  i++){
-			if(rook.isWhite() == Chess.pieceInAPosition(i, Col).isWhite())
+		//Abajo
+		for(int i = Row+1; i < 8;  i++){
+			if( Chess.isThereAPieceInPosition(i, Col) ){
+				System.out.println("Pieza abajo");
+//				i=0;
 				break;
+			}
 			Pieces[i][Col].setEnabled(true);
 		}
 	}
