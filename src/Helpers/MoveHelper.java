@@ -292,6 +292,10 @@ public class MoveHelper {
 				}
 			}
 		}
+		//BUG - Kings can capture enemy pieces that are protected by other enemy pieces
+		//This is due to the behavior on the Enable___Movement that dictates that the
+		//spot occupied by an ally piece is not a valid movement, and as such, it is not
+		//protected 
 	}
 	public void EnableBishopMovements(JButton[][] Pieces){
 		//NW
