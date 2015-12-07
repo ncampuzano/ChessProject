@@ -12,6 +12,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
@@ -85,6 +86,9 @@ public class ChessGUI {
             case GAME_STATE_BLACK:
                 this.gameState = GAME_STATE_WHITE;
                 break;
+            case GAME_STATE_END:
+            	JOptionPane.showMessageDialog(null,"Fin Del Juego!" ,"",JOptionPane.INFORMATION_MESSAGE);
+            	break;
             default:
                 throw new IllegalStateException("unknown game state:" + this.gameState);
         }

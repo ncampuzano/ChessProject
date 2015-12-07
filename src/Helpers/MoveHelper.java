@@ -469,11 +469,13 @@ public class MoveHelper {
 			}
 		}
 		disableAll(Pieces);
-		Pieces[king.getRow()][king.getColumn()].setEnabled(true);
-		EnableMovements(king, Pieces);
-		if( !(Pieces[king.getRow()][king.getColumn()].isEnabled()) ){
-			System.out.println("Check!!" + king.getRow() + " : " + king.getColumn());
-			return true;
+		if(king != null){
+			Pieces[king.getRow()][king.getColumn()].setEnabled(true);
+			EnableMovements(king, Pieces);
+			if( !(Pieces[king.getRow()][king.getColumn()].isEnabled()) ){
+				System.out.println("Check!!" + king.getRow() + " : " + king.getColumn());
+				return true;
+			}
 		}
 		return false;
 	}
