@@ -24,6 +24,7 @@ public class ChessGUI {
 	private JPanel ChessBoard = null;
 	private JPanel GamePanel = null;
 	private boolean isHoldingAPiece = false;
+	private boolean isComputer;
 	private Piece heldPiece = null;
 	private int gameState = GAME_STATE_WHITE;
     static final int GAME_STATE_WHITE = 1;
@@ -32,7 +33,8 @@ public class ChessGUI {
     public JLabel lblGameState;
     private Helpers.MoveHelper MoveHelper ;
 	
-	public ChessGUI(JFrame frame){
+	public ChessGUI(JFrame frame, Boolean computer){
+		
 		//Generate the Game Panel, which includes the Board and the extra game information
 		GamePanel = new JPanel(new BorderLayout());
 		frame.getContentPane().add(GamePanel, BorderLayout.CENTER);
@@ -52,6 +54,7 @@ public class ChessGUI {
 		GamePanel.add(ChessBoard, BorderLayout.CENTER);
 		initializePieces();
 		paintPieces();
+		isComputer = computer;
 		
 	}
 	public void DestroyChessBoard(JFrame frame){
@@ -79,20 +82,34 @@ public class ChessGUI {
     		}
     		this.gameState = GAME_STATE_END;
     	}
-        switch (this.gameState) {
-            case GAME_STATE_WHITE:
-                this.gameState = GAME_STATE_BLACK;
-                break;
-            case GAME_STATE_BLACK:
-                this.gameState = GAME_STATE_WHITE;
-                break;
-            case GAME_STATE_END:
-            	JOptionPane.showMessageDialog(null,"Fin Del Juego!" ,"",JOptionPane.INFORMATION_MESSAGE);
-            	break;
-            default:
-                throw new IllegalStateException("unknown game state:" + this.gameState);
-        }
-        lblGameState.setText(this.getGameStateAsText());
+    	if(isComputer){
+    		if(this.gameState == GAME_STATE_WHITE){
+    			lblGameState.setText("Pensando...");
+    			try {
+    			    Thread.sleep(1500);                 //1000 milliseconds is one second.
+    			} catch(InterruptedException ex) {
+    			    Thread.currentThread().interrupt();
+    			}
+    			//Make Movement
+    		}   		
+    	}else{
+    		switch (this.gameState) {
+	            case GAME_STATE_WHITE:
+	                this.gameState = GAME_STATE_BLACK;
+	                break;
+	            case GAME_STATE_BLACK:
+	                this.gameState = GAME_STATE_WHITE;
+	                break;
+	            case GAME_STATE_END:
+	            	JOptionPane.showMessageDialog(null,"Fin Del Juego!" ,"",JOptionPane.INFORMATION_MESSAGE);
+	            	break;
+	            default:
+	                throw new IllegalStateException("unknown game state:" + this.gameState);
+    		}
+    		
+    	}
+    	lblGameState.setText(this.getGameStateAsText());
+        
     }
     
     public boolean endGameConditionReached(){

@@ -87,7 +87,7 @@ public class GraphicUI {
 					toolBar.remove(Chess.lblGameState);
 					Chess.DestroyChessBoard(frame);
 				}
-				Chess =  new ChessGUI(frame);
+				Chess =  new ChessGUI(frame, false);
 				toolBar.add(Chess.lblGameState);
 			}
 		});
@@ -98,7 +98,7 @@ public class GraphicUI {
 					toolBar.remove(Chess.lblGameState);
 					Chess.DestroyChessBoard(frame);
 				}
-				Chess =  new ChessGUI(frame);
+				Chess =  new ChessGUI(frame, true);
 				toolBar.add(Chess.lblGameState);
 			}
 		});
@@ -125,7 +125,7 @@ public class GraphicUI {
 		});
 		toolBar.add(btnResign);
 		
-		JMenu btnSeparator = new JMenu("            ");
+		JMenu btnSeparator = new JMenu("           ");
 		btnResign.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
