@@ -58,22 +58,22 @@ public class MoveHelper {
 		
 		switch (piece.getType()) {
         case Piece.TYPE_BISHOP:
-        	EnableBishopMovements(Pieces);
+        	EnableBishopAttacks(Pieces);
             break;
         case Piece.TYPE_KING:
         	EnableKingAttacks(Pieces);
             break;
         case Piece.TYPE_KNIGHT:
-        	EnableKnightMovements(Pieces);
+        	EnableKnightAttacks(Pieces);
             break;
         case Piece.TYPE_PAWN:
         	EnablePawnAttacks(Pieces);
             break;
         case Piece.TYPE_QUEEN:
-        	EnableQueenMovements(Pieces);
+        	EnableQueenAttacks(Pieces);
             break;
         case Piece.TYPE_ROOK:
-        	EnableRookMovements(Pieces);
+        	EnableRookAttacks(Pieces);
             break;
 		}	
 	}
@@ -81,54 +81,164 @@ public class MoveHelper {
 		Piece pawn = Chess.pieceInAPosition(Row,Col);
 		if(pawn.isWhite()){
 			//Check both attacking squares
-//			if(Chess.isThereAPieceInPosition(Row+1, Col+1) && isEnemyPiece(pawn, Row+1, Col+1)){
 			if((Col+1) <= 7)
 				Pieces[Row+1][Col+1].setEnabled(true);
-//			}
-//			if(Chess.isThereAPieceInPosition(Row+1, Col-1) && isEnemyPiece(pawn, Row+1, Col-1)){
 			if((Col-1) >= 0)
 				Pieces[Row+1][Col-1].setEnabled(true);
-//			}
 		}
 		else{
-//			if(Chess.isThereAPieceInPosition(Row-1, Col+1) && isEnemyPiece(pawn, Row-1, Col+1)){
 			if((Col+1) <= 7)
 				Pieces[Row-1][Col+1].setEnabled(true);
-//			}
-//			if(Chess.isThereAPieceInPosition(Row-1, Col-1) && isEnemyPiece(pawn, Row-1, Col-1)){
 			if((Col-1) >= 0)
 				Pieces[Row-1][Col-1].setEnabled(true);
-//			}
 		}
 		
 	}
 
 	private void EnableKingAttacks(JButton[][] Pieces) {
-		Piece king = Chess.pieceInAPosition(Row, Col);
-		if( (!Chess.isThereAPieceInPosition(Row+1, Col+1) || isEnemyPiece(king, Row+1, Col+1) ) && (Row+1) <= 7  && (Col+1) <= 7){
+		if(  (Row+1) <= 7  && (Col+1) <= 7){
 			Pieces[Row+1][Col+1].setEnabled(true);
 		}
-		if( (!Chess.isThereAPieceInPosition(Row+1, Col) || isEnemyPiece(king, Row+1, Col) ) && (Row+1) <= 7){
+		if( (Row+1) <= 7){
 			Pieces[Row+1][Col].setEnabled(true);
 		}
-		if( (!Chess.isThereAPieceInPosition(Row+1, Col-1) || isEnemyPiece(king, Row+1, Col-1) ) && (Row+1) <= 7 && (Col-1) >= 0){
+		if( (Row+1) <= 7 && (Col-1) >= 0){
 			Pieces[Row+1][Col-1].setEnabled(true);
 		}
-		if( (!Chess.isThereAPieceInPosition(Row-1, Col+1) || isEnemyPiece(king, Row-1, Col+1) ) && (Row-1) >= 0 && (Col+1) <= 7){
+		if( (Row-1) >= 0 && (Col+1) <= 7){
 			Pieces[Row-1][Col+1].setEnabled(true);
 		}
-		if( (!Chess.isThereAPieceInPosition(Row-1, Col) || isEnemyPiece(king, Row-1, Col) ) && (Row-1) >= 0 ){
+		if( (Row-1) >= 0 ){
 			Pieces[Row-1][Col].setEnabled(true);
 		}
-		if( (!Chess.isThereAPieceInPosition(Row-1, Col-1) || isEnemyPiece(king, Row-1, Col-1) ) && (Row-1) >= 0 && (Col-1) >= 0){
+		if( (Row-1) >= 0 && (Col-1) >= 0){
 			Pieces[Row-1][Col-1].setEnabled(true);
 		}
-		if( (!Chess.isThereAPieceInPosition(Row, Col+1) || isEnemyPiece(king, Row, Col+1) ) && (Col+1) <= 7){
+		if( (Col+1) <= 7){
 			Pieces[Row][Col+1].setEnabled(true);
 		}
-		if( (!Chess.isThereAPieceInPosition(Row, Col-1) || isEnemyPiece(king, Row, Col-1) ) && (Col-1) >= 0){
+		if( (Col-1) >= 0){
 			Pieces[Row][Col-1].setEnabled(true);
 		}
+	}
+	
+	public void EnableRookAttacks(JButton[][] Pieces){
+		//Izquierda
+		for(int i = 1; Col-i >=  0;  i++){
+			if(Chess.isThereAPieceInPosition(Row,Col-i)){
+				Pieces[Row][Col-i].setEnabled(true);
+				if(Chess.pieceInAPosition(Row, Col-i).getType() == Piece.TYPE_KING && (Col-i-1)>=0)
+					Pieces[Row][Col-i-1].setEnabled(true);
+				break;
+			}
+			Pieces[Row][Col-i].setEnabled(true);
+		}
+		//Derecha
+		for(int i = 1; Col+i < 8;  i++){
+			if(Chess.isThereAPieceInPosition(Row, Col+i)){
+				Pieces[Row][Col+i].setEnabled(true);
+				if(Chess.pieceInAPosition(Row, Col+i).getType() == Piece.TYPE_KING && (Col+i+1)<=7)
+					Pieces[Row][Col+i+1].setEnabled(true);
+				break;
+			}
+			Pieces[Row][Col+i].setEnabled(true);
+		}
+		//Arriba
+		for(int i = 1; Row-i >= 0;  i++){
+			if(Chess.isThereAPieceInPosition(Row-i, Col)){
+				Pieces[Row-i][Col].setEnabled(true);
+				if(Chess.pieceInAPosition(Row-i, Col).getType() == Piece.TYPE_KING && (Row-i-1)>=0)
+					Pieces[Row-i-1][Col].setEnabled(true);
+				break;
+			}
+			Pieces[Row-i][Col].setEnabled(true);
+		}
+		//Abajo
+		for(int i = 1; Row+i < 8;  i++){
+			if(Chess.isThereAPieceInPosition(Row+i, Col) ){
+				Pieces[Row+i][Col].setEnabled(true);
+				if(Chess.pieceInAPosition(Row+i, Col).getType() == Piece.TYPE_KING && (Row+i+1)<=7)
+					Pieces[Row+i+1][Col].setEnabled(true);
+				break;
+			}
+			Pieces[Row+i][Col].setEnabled(true);
+		}
+	}
+	public void EnableBishopAttacks(JButton[][] Pieces){
+		//NW
+		for(int i = 1; Col-i>=0 && Row-i >= 0;  i++){
+			if(Chess.isThereAPieceInPosition(Row-i, Col-i)){
+				Pieces[Row-i][Col-i].setEnabled(true);
+				if(Chess.pieceInAPosition(Row-i, Col-i).getType() == Piece.TYPE_KING && (Row-i-1)>=0 && (Col-i-1)>=0 )
+					Pieces[Row-i-1][Col-i-1].setEnabled(true);
+				break;
+			}
+			Pieces[Row-i][Col-i].setEnabled(true);
+		}
+		//NE
+		for(int i = 1; Col+i<=7 && Row-i >= 0;  i++){
+			if(Chess.isThereAPieceInPosition(Row-i, Col+i)){
+				Pieces[Row-i][Col+i].setEnabled(true);
+				if(Chess.pieceInAPosition(Row-i, Col+i).getType() == Piece.TYPE_KING && (Row-i-1)>=0 && (Col+i+1)<=7 )
+					Pieces[Row-i-1][Col+i+1].setEnabled(true);
+				break;
+			}
+			Pieces[Row-i][Col+i].setEnabled(true);
+		}
+		//SW
+		for(int i = 1; Col-i>=0 && Row+i <= 7;  i++){
+			if(Chess.isThereAPieceInPosition(Row+i, Col-i)){
+				Pieces[Row+i][Col-i].setEnabled(true);
+				if(Chess.pieceInAPosition(Row+i, Col-i).getType() == Piece.TYPE_KING && (Row+i+1)<=7 && (Col-i-1)>=0 )
+					Pieces[Row+i+1][Col-i-1].setEnabled(true);
+				break;
+			}
+			Pieces[Row+i][Col-i].setEnabled(true);
+		}
+		//SE
+		for(int i = 1; Col+i<=7 && Row+i <= 7;  i++){
+			if(Chess.isThereAPieceInPosition(Row+i, Col+i)){
+				Pieces[Row+i][Col+i].setEnabled(true);
+				if(Chess.pieceInAPosition(Row+i, Col+i).getType() == Piece.TYPE_KING && (Row+i+1)<=7 && (Col+i+1)<=7 )
+					Pieces[Row+i+1][Col+i+1].setEnabled(true);
+				break;
+			}
+			Pieces[Row+i][Col+i].setEnabled(true);
+		}
+	}
+	public void EnableKnightAttacks(JButton[][] Pieces){
+		//North
+		if(Row-2 >= 0){
+			if( (Col+1) <= 7)
+				Pieces[Row-2][Col+1].setEnabled(true);
+			if( (Col-1) >= 0)
+				Pieces[Row-2][Col-1].setEnabled(true);
+		}
+		//South
+		if(Row+2 <= 7){
+			if( (Col+1) <= 7)
+				Pieces[Row+2][Col+1].setEnabled(true);
+			if( (Col-1) >= 0)
+				Pieces[Row+2][Col-1].setEnabled(true);
+		}
+		//East
+		if(Col+2 <= 7){
+			if( (Row-1) >= 0)
+				Pieces[Row-1][Col+2].setEnabled(true);
+			if( (Row+1) <= 7)
+				Pieces[Row+1][Col+2].setEnabled(true);
+		}
+		//West
+		if(Col-2 >= 0){
+			if( (Row-1) >= 0)
+				Pieces[Row-1][Col-2].setEnabled(true);
+			if( (Row+1) <= 7)
+				Pieces[Row+1][Col-2].setEnabled(true);
+		}
+	}
+	public void EnableQueenAttacks(JButton[][] Pieces){
+		EnableRookAttacks(Pieces);
+		EnableBishopAttacks(Pieces);
 	}
 
 	public void reEnableAll(){
@@ -198,10 +308,10 @@ public class MoveHelper {
 		Piece pawn = Chess.pieceInAPosition(Row,Col);
     	EnablePawnAttacks(Pieces);
 		if(pawn.isWhite()){
-			if(!Chess.isThereAPieceInPosition(Row+1, Col+1) || !isEnemyPiece(pawn, Row+1, Col+1)){
+			if((!Chess.isThereAPieceInPosition(Row+1, Col+1) || !isEnemyPiece(pawn, Row+1, Col+1)) && (Row+1)<=7 && (Col+1) <= 7){
 	    		Pieces[Row+1][Col+1].setEnabled(false);
 	    	}
-	    	if(!Chess.isThereAPieceInPosition(Row+1, Col-1) || !isEnemyPiece(pawn, Row+1, Col-1)){
+	    	if((!Chess.isThereAPieceInPosition(Row+1, Col-1) || !isEnemyPiece(pawn, Row+1, Col-1)) && (Row+1)<=7 && (Col-1) >= 0){
 	    		Pieces[Row+1][Col-1].setEnabled(false);
 	    	}
 			//Check normal movement
@@ -213,10 +323,10 @@ public class MoveHelper {
 			}
 		}
 		else{
-			if(!Chess.isThereAPieceInPosition(Row-1, Col+1) || !isEnemyPiece(pawn, Row-1, Col+1)){
+			if((!Chess.isThereAPieceInPosition(Row-1, Col+1) || !isEnemyPiece(pawn, Row-1, Col+1)) && (Row-1)>=0 && (Col+1)<= 7){
 				Pieces[Row-1][Col+1].setEnabled(false);
 			}
-			if(!Chess.isThereAPieceInPosition(Row-1, Col-1) || !isEnemyPiece(pawn, Row-1, Col-1)){
+			if((!Chess.isThereAPieceInPosition(Row-1, Col-1) || !isEnemyPiece(pawn, Row-1, Col-1)) && (Row-1)>=0 && (Col-1)>= 0){
 				Pieces[Row-1][Col-1].setEnabled(false);
 			}
 			if(!Chess.isThereAPieceInPosition(Row-1, Col)){
@@ -292,10 +402,6 @@ public class MoveHelper {
 				}
 			}
 		}
-		//BUG - Kings can capture enemy pieces that are protected by other enemy pieces
-		//This is due to the behavior on the Enable___Movement that dictates that the
-		//spot occupied by an ally piece is not a valid movement, and as such, it is not
-		//protected 
 	}
 	public void EnableBishopMovements(JButton[][] Pieces){
 		//NW
