@@ -201,8 +201,11 @@ public class ChessGUI {
 			heldPiece.setColumn(column);
 			heldPiece.setRow(row);
 			pieces.add(heldPiece);
+			if( MoveHelper.isCheck(heldPiece.isWhite(), chessBoardButtons) ){
+				lblGameState.setText("En Jaque Rey " +( heldPiece.isWhite() ? "Negro" : "Blanco") );
+			}
 			repaintPieces();
-			MoveHelper.reEnableAll();
+			MoveHelper.reEnableAll(chessBoardButtons);
 			setBasicChessBackgrounds();
 			
 			
@@ -229,8 +232,8 @@ public class ChessGUI {
 		pieces.add(new Piece (true,Piece.TYPE_ROOK  ,0,0));
 		pieces.add(new Piece (true,Piece.TYPE_KNIGHT,0,1));
 		pieces.add(new Piece (true,Piece.TYPE_BISHOP,0,2));
-		pieces.add(new Piece (true,Piece.TYPE_QUEEN ,0,3));
-		pieces.add(new Piece (true,Piece.TYPE_KING  ,0,4));
+		pieces.add(new Piece (true,Piece.TYPE_QUEEN ,0,4));
+		pieces.add(new Piece (true,Piece.TYPE_KING  ,0,3));
 		pieces.add(new Piece (true,Piece.TYPE_BISHOP,0,5));
 		pieces.add(new Piece (true,Piece.TYPE_KNIGHT,0,6));
 		pieces.add(new Piece (true,Piece.TYPE_ROOK  ,0,7));

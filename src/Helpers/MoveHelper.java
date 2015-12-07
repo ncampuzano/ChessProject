@@ -241,10 +241,10 @@ public class MoveHelper {
 		EnableBishopAttacks(Pieces);
 	}
 
-	public void reEnableAll(){
+	public void reEnableAll(JButton[][] Pieces){
 		for (int i = 0; i < 8; i++){
 			for (int j = 0; j < 8; j++){
-				buttonPiecesArray[i][j].setEnabled(true);
+				Pieces[i][j].setEnabled(true);
 			}
 		}
 	}
@@ -460,5 +460,21 @@ public class MoveHelper {
 			}
 		}
 		return dangerBoard;
+	}
+	public boolean isCheck (boolean isWhite, JButton[][] Pieces){
+		Piece king = null;
+		for(Piece piece : Chess.getPieces()){
+			if(piece.getType() == Piece.TYPE_KING && piece.isWhite() != isWhite){
+				king = piece;
+			}
+		}
+		disableAll(Pieces);
+		Pieces[king.getRow()][king.getColumn()].setEnabled(true);
+		EnableMovements(king, Pieces);
+		if( !(Pieces[king.getRow()][king.getColumn()].isEnabled()) ){
+			System.out.println("Check!!" + king.getRow() + " : " + king.getColumn());
+			return true;
+		}
+		return false;
 	}
 }
