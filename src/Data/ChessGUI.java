@@ -187,8 +187,8 @@ public class ChessGUI {
 		ChessBoard.setLayout(new GridLayout(0,9));
 		
 		ChessBoard.add(new JLabel(""));
-		for (int i = (int)'A'; i < (int)'A'+8; i++)
-			ChessBoard.add( new JLabel( Character.toString( (char)i ) ,
+		for (int i = (int)'H'; i > (int)'H'-8; i--)
+			ChessBoard.add( new JLabel( Character.toString( (char)(i) ) ,
                     SwingConstants.CENTER ) );
 		
 		
@@ -197,7 +197,7 @@ public class ChessGUI {
 					for (int j = 0; j < 8; j++){
 						switch (j){
 						case(0):
-							ChessBoard.add(new JLabel ("" + (8-i) ,
+							ChessBoard.add(new JLabel ("" + (1+i) ,
 		                            SwingConstants.CENTER ) );
 						default:
 							ChessBoard.add(chessBoardButtons[i][j]);
