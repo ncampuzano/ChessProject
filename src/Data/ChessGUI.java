@@ -56,9 +56,10 @@ public class ChessGUI {
 		chessBoardButtons = setBasicChessBoardButtons();
 		ChessBoard = setChessBoard(chessBoardButtons);
 		GamePanel.add(ChessBoard, BorderLayout.CENTER);
+		isComputer = computer;
 		initializePieces();
 		paintPieces();
-		isComputer = computer;
+		
 		
 		
 	}
@@ -91,8 +92,8 @@ public class ChessGUI {
     		if(this.gameState == GAME_STATE_WHITE){
     			lblGameState.setText("Pensando...");
     			this.gameState = GAME_STATE_BLACK;
-    			
     			Move bestMove = cpuPlayer.getBestMove();
+    			System.out.println(bestMove.score);
     			getChessBoardButtons()[bestMove.sourceRow][bestMove.sourceColumn].doClick();
                 buttonPressed(bestMove.targetRow, bestMove.targetColumn);
                 
@@ -284,7 +285,7 @@ public class ChessGUI {
 			pieces.add(new Piece (false,Piece.TYPE_PAWN,6,i));
 		}
 		if(isComputer)
-			cpuPlayer = new IAPlayer(this); 
+			cpuPlayer = new IAPlayer(this); 	
 	}
 	public boolean isThereAPieceInPosition(int row, int column){
 		for(Piece piece : pieces){

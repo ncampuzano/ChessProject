@@ -8,16 +8,16 @@ public class IAPlayer {
 	private ChessGUI chessGame;
 	
     public IAPlayer(ChessGUI chessGame) {
-        this.chessGame = chessGame;
+    	this.chessGame = chessGame;
 
     }
     
 	public Move getBestMove() {
- 
+		 
         List<Move> validMoves = generateMoves();
         int bestResult = Integer.MIN_VALUE;
         Move bestMove = null;
-         
+        
         for (Move move : validMoves) {
             //Make movement
         	chessGame.getChessBoardButtons()[move.sourceRow][move.sourceColumn].doClick();
