@@ -90,13 +90,15 @@ public class ChessGUI {
     	if(isComputer){
     		if(this.gameState == GAME_STATE_WHITE){
     			lblGameState.setText("Pensando...");
-    			try {
-    			    Thread.sleep(2000);                 
-    			} catch(InterruptedException ex) {
-    			    Thread.currentThread().interrupt();
-    			}
-    			//TODO
-    		}   		
+    			this.gameState = GAME_STATE_BLACK;
+    			
+    			Move bestMove = cpuPlayer.getBestMove();
+    			getChessBoardButtons()[bestMove.sourceRow][bestMove.sourceColumn].doClick();
+                buttonPressed(bestMove.targetRow, bestMove.targetColumn);
+                
+    		}else{
+    			this.gameState = GAME_STATE_WHITE;
+    		} 		
     	}else{
     		switch (this.gameState) {
 	            case GAME_STATE_WHITE:
