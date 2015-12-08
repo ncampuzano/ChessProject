@@ -26,6 +26,7 @@ public class ChessGUI {
 	private JButton[][] chessBoardButtons = new JButton [8][8];
 	private JPanel ChessBoard = null;
 	private JPanel GamePanel = null;
+	JPanel panelCapturasPromocionesEtc = null;
 	private boolean isHoldingAPiece = false;
 	private boolean isComputer;
 	private Piece heldPiece = null;
@@ -49,8 +50,9 @@ public class ChessGUI {
 		String labelText = this.getGameStateAsText();
 		lblGameState = new JLabel(labelText);
 		
-		JLabel lblCapturasPromocionesEtc = new JLabel("Capturas, Promociones, etc");
-		GamePanel.add(lblCapturasPromocionesEtc, BorderLayout.WEST);
+		panelCapturasPromocionesEtc = new JPanel() ;
+		panelCapturasPromocionesEtc.setLayout(new GridLayout(1, 0, 0, 0));
+		GamePanel.add(panelCapturasPromocionesEtc, BorderLayout.WEST);
 		
 		//Instance the basic ChessBoard
 		chessBoardButtons = setBasicChessBoardButtons();
@@ -62,6 +64,11 @@ public class ChessGUI {
 		
 		
 		
+	}
+	public void paintCapturedPieces(){
+		for(Piece piece : capturedPieces){
+			panelCapturasPromocionesEtc.add(new JLabel(new ImageIcon(piece.getPieceImage())));
+		}
 	}
 	public void DestroyChessBoard(JFrame frame){
 		frame.getContentPane().remove(GamePanel);
@@ -215,6 +222,7 @@ public class ChessGUI {
 				pieceInAPosition(row, column).setCapture(true);
 				capturedPieces.add(pieceInAPosition(row,column));
 				pieces.remove(pieceInAPosition(row,column));
+				paintCapturedPieces();
 			}
 			if(heldPiece.getColumn() != column || heldPiece.getRow() != row)
 				changeGameState();
