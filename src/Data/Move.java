@@ -19,4 +19,7 @@ public class Move {
 	public Move clone(){
 		return new Move(sourceRow,sourceColumn,targetRow,targetColumn);
 	}
+	
+	    
+	    
 }

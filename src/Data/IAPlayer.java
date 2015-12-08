@@ -22,11 +22,18 @@ public class IAPlayer {
         Move bestMove = null;
          
         for (Move move : validMoves) {
-            executeMove(move);
- 
+            //Make movement
+        	chessGame.getChessBoardButtons()[move.sourceRow][move.sourceColumn].doClick();
+            chessGame.buttonPressed(move.targetRow, move.targetColumn);
+            chessGame.changeGameState();
+            //Evaluate
             int evaluationResult = this.evaluateState();
- 
-            chessGame.undoMove(move);
+            //Undo
+            
+            chessGame.getChessBoardButtons()[move.targetRow][move.targetColumn].doClick();
+            chessGame.buttonPressed(move.sourceRow, move.sourceColumn);	
+            chessGame.changeGameState();
+            
             if( evaluationResult > bestResult){
                 bestResult = evaluationResult;
                 bestMove = move;
@@ -94,33 +101,28 @@ public class IAPlayer {
 	        int scoreWhite = 0;
 	        int scoreBlack = 0;
 	        for (Piece piece : this.chessGame.getPieces()) {
-	            if(piece.getColor() == Piece.COLOR_BLACK){
+	            if(!piece.isWhite()){
 	                scoreBlack +=
 	                    getScoreForPieceType(piece.getType());
 	 
-	            }else if( piece.getColor() == Piece.COLOR_WHITE){
+	            }else if( piece.isWhite()){
 	                scoreWhite +=
 	                    getScoreForPieceType(piece.getType());
 	 
 	            }else{
 	                throw new IllegalStateException(
-	                        "unknown piece color found: "+piece.getColor());
+	                        "unknown piece color found: "+piece.isWhite());
 	            }
 	        }
 	         
 	        // return evaluation result depending on who's turn it is
 	        int gameState = this.chessGame.getGameState();
 	         
-	        if( gameState == ChessGame.GAME_STATE_BLACK){
+	        if( gameState == chessGame.GAME_STATE_BLACK){
 	            return scoreBlack - scoreWhite;
 	         
-	        }else if(gameState == ChessGame.GAME_STATE_WHITE){
+	        }else if(gameState == chessGame.GAME_STATE_WHITE){
 	            return scoreWhite - scoreBlack;
-	         
-	        }else if(gameState == ChessGame.GAME_STATE_END_WHITE_WON
-	                || gameState == ChessGame.GAME_STATE_END_BLACK_WON){
-	            return Integer.MIN_VALUE + 1;
-	         
 	        }else{
 	            throw new IllegalStateException("unknown game state: "+gameState);
 	        }
