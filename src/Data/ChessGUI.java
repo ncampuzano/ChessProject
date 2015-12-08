@@ -51,8 +51,8 @@ public class ChessGUI {
 		lblGameState = new JLabel(labelText);
 		
 		panelCapturasPromocionesEtc = new JPanel() ;
-		panelCapturasPromocionesEtc.setLayout(new GridLayout(9,4));
-		GamePanel.add(panelCapturasPromocionesEtc, BorderLayout.WEST);
+		panelCapturasPromocionesEtc.setLayout(new GridLayout(2,18));
+		GamePanel.add(panelCapturasPromocionesEtc, BorderLayout.SOUTH);
 		
 		//Instance the basic ChessBoard
 		chessBoardButtons = setBasicChessBoardButtons();
