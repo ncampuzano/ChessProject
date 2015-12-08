@@ -12,7 +12,7 @@ public class IAPlayer {
 
     }
     
-	private Move getBestMove() {
+	public Move getBestMove() {
  
         List<Move> validMoves = generateMoves();
         int bestResult = Integer.MIN_VALUE;

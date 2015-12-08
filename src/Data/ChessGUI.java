@@ -16,6 +16,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import javafx.scene.chart.PieChart.Data;
+
+
 public class ChessGUI {
 
 	private List<Piece> pieces = new ArrayList<>();
@@ -32,6 +35,7 @@ public class ChessGUI {
     static final int GAME_STATE_END = 2;
     public JLabel lblGameState;
     public Helpers.MoveHelper MoveHelper ;
+    public IAPlayer cpuPlayer;
 	
 	public ChessGUI(JFrame frame, Boolean computer){
 		
@@ -55,6 +59,7 @@ public class ChessGUI {
 		initializePieces();
 		paintPieces();
 		isComputer = computer;
+		
 		
 	}
 	public void DestroyChessBoard(JFrame frame){
@@ -86,7 +91,7 @@ public class ChessGUI {
     		if(this.gameState == GAME_STATE_WHITE){
     			lblGameState.setText("Pensando...");
     			try {
-    			    Thread.sleep(2000);                 //1000 milliseconds is one second.
+    			    Thread.sleep(2000);                 
     			} catch(InterruptedException ex) {
     			    Thread.currentThread().interrupt();
     			}
@@ -276,6 +281,8 @@ public class ChessGUI {
 		for (int i = 0; i < 8; i++){
 			pieces.add(new Piece (false,Piece.TYPE_PAWN,6,i));
 		}
+		if(isComputer)
+			cpuPlayer = new IAPlayer(this); 
 	}
 	public boolean isThereAPieceInPosition(int row, int column){
 		for(Piece piece : pieces){
