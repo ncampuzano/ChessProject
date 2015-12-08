@@ -19,17 +19,15 @@ public class IAPlayer {
         Move bestMove = null;
         
         for (Move move : validMoves) {
-            //Make movement
-        	chessGame.getChessBoardButtons()[move.sourceRow][move.sourceColumn].doClick();
-            chessGame.buttonPressed(move.targetRow, move.targetColumn);
-            chessGame.changeGameState();
+        	
+        	//Make movement
+        	move = MakeTestMovement(move);
+            
             //Evaluate
             int evaluationResult = this.evaluateState();
-            //Undo
             
-            chessGame.getChessBoardButtons()[move.targetRow][move.targetColumn].doClick();
-            chessGame.buttonPressed(move.sourceRow, move.sourceColumn);	
-            chessGame.changeGameState();
+            //Undo
+            UndoTestMovement(move);
             
             if( evaluationResult > bestResult){
                 bestResult = evaluationResult;
@@ -39,12 +37,34 @@ public class IAPlayer {
         System.out.println("done thinking! best move is: "+bestMove);
         return bestMove;
     }
+	private Move MakeTestMovement (Move move){
+		Piece pieceToMove = chessGame.pieceInAPosition(move.sourceRow, move.sourceColumn);
+		chessGame.pieces.remove(pieceToMove);
+		if(chessGame.pieceInAPosition(move.targetRow, move.targetColumn) != null){
+			move.capturedPiece = chessGame.pieceInAPosition(move.targetRow, move.targetColumn);
+			chessGame.pieces.remove(move.capturedPiece);
+		}
+		pieceToMove.setRow(move.targetRow);
+		pieceToMove.setColumn(move.targetColumn);
+		chessGame.pieces.add(pieceToMove);
+		return move;
+	}
+	private void UndoTestMovement (Move move){
+		Piece pieceToMove = chessGame.pieceInAPosition(move.targetRow, move.targetColumn);
+		chessGame.pieces.remove(pieceToMove);
+		if(move.capturedPiece != null){
+			chessGame.pieces.add(move.capturedPiece);
+		}
+		pieceToMove.setRow(move.sourceRow);
+		pieceToMove.setColumn(move.sourceColumn);
+		chessGame.pieces.add(pieceToMove);
+	}
 	 private List<Move> generateMoves() {
 		 
 	        List<Piece> pieces = this.chessGame.getPieces();
 	        List<Move> validMoves = new ArrayList<Move>();
 	        Move testMove = new Move(0,0,0,0);
-	 
+	        
 	        int pieceColor = this.chessGame.getGameState();
 	 
 	        // iterate over all non-captured pieces
@@ -59,35 +79,44 @@ public class IAPlayer {
 	                // iterate over all board rows and columns
 	                for (int targetRow = 0; targetRow <= 7; targetRow++) {
 	                    for (int targetColumn = 0; targetColumn <= 7; targetColumn++) {
-	 
+	                    	
 	                        // finish generating move
 	                        testMove.targetRow = targetRow;
 	                        testMove.targetColumn = targetColumn;
-	 
+	                        System.out.println("" + testMove.targetRow + "---" + testMove.targetColumn);
 	                        // check if generated move is valid
 	                        if (isMoveValid(testMove)) {
-	                            // valid move
 	                            validMoves.add(testMove.clone());
 	                        } else {
 	                            // generated move is invalid, so we skip it
 	                        }
+	                        System.out.println("SALI");
 	                    }
 	                }
 	 
 	            }
 	        }
+	        System.out.println("ACA NO ESTA EL PROBLEMA");
 	        return validMoves;
 	    }
 	 private boolean convertToInt(int i){
 		 return (i == 1) ? true: false;
 	 }
 	 private boolean isMoveValid(Move move){
+		 System.out.println("Enable Movements");
 		 chessGame.MoveHelper.EnableMovements(chessGame.pieceInAPosition(move.sourceRow,move.sourceColumn), chessGame.getChessBoardButtons());
+		 System.out.println("After Enable Movements");
+		 
+		 System.out.println("To Evaluate " + move.targetRow + "---" + move.targetColumn);
 		 if(chessGame.getChessBoardButtons()[move.targetRow][move.targetColumn].isEnabled()){
+			 System.out.println("AFTER TRUE Evaluate " + move.targetRow + "---" + move.targetColumn);
+
 			 chessGame.MoveHelper.reEnableAll(chessGame.getChessBoardButtons());
 			 return true;
 		 }else{
-			 
+			 System.out.println("AFTER Evaluate " + move.targetRow + "---" + move.targetColumn);
+
+			 chessGame.MoveHelper.reEnableAll(chessGame.getChessBoardButtons());
 			 return false;
 		 }
 			 

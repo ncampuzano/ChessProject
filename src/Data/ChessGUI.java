@@ -21,7 +21,7 @@ import javafx.scene.chart.PieChart.Data;
 
 public class ChessGUI {
 
-	private List<Piece> pieces = new ArrayList<>();
+	public List<Piece> pieces = new ArrayList<>();
 	private List<Piece> capturedPieces = new ArrayList<>();
 	private JButton[][] chessBoardButtons = new JButton [8][8];
 	private JPanel ChessBoard = null;
@@ -88,36 +88,23 @@ public class ChessGUI {
     		}
     		this.gameState = GAME_STATE_END;
     	}
-    	if(isComputer){
-    		if(this.gameState == GAME_STATE_WHITE){
-    			lblGameState.setText("Pensando...");
-    			this.gameState = GAME_STATE_BLACK;
-    			Move bestMove = cpuPlayer.getBestMove();
-    			System.out.println(bestMove.score);
-    			getChessBoardButtons()[bestMove.sourceRow][bestMove.sourceColumn].doClick();
-                buttonPressed(bestMove.targetRow, bestMove.targetColumn);
-                
-    		}else{
-    			this.gameState = GAME_STATE_WHITE;
-    		} 		
-    	}else{
-    		switch (this.gameState) {
-	            case GAME_STATE_WHITE:
-	                this.gameState = GAME_STATE_BLACK;
-	                break;
-	            case GAME_STATE_BLACK:
-	                this.gameState = GAME_STATE_WHITE;
-	                break;
-	            case GAME_STATE_END:
-	            	JOptionPane.showMessageDialog(null,"Fin Del Juego!" ,"",JOptionPane.INFORMATION_MESSAGE);
-	            	break;
-	            default:
-	                throw new IllegalStateException("unknown game state:" + this.gameState);
-    		}
-    		
+    	switch (this.gameState) {
+	        case GAME_STATE_WHITE:
+	            this.gameState = GAME_STATE_BLACK;
+	            break;
+	        case GAME_STATE_BLACK:
+	            this.gameState = GAME_STATE_WHITE;
+	            break;
+	        case GAME_STATE_END:
+	        	JOptionPane.showMessageDialog(null,"Fin Del Juego!" ,"",JOptionPane.INFORMATION_MESSAGE);
+	        	break;
+	        default:
+	            throw new IllegalStateException("unknown game state:" + this.gameState);
     	}
-    	lblGameState.setText(this.getGameStateAsText());
-        
+    	if(isComputer && this.gameState == GAME_STATE_BLACK )
+    		lblGameState.setText("Pensando...");
+    	else
+    		lblGameState.setText(this.getGameStateAsText());
     }
     
     public boolean endGameConditionReached(){
@@ -128,7 +115,11 @@ public class ChessGUI {
     	}
     	return false;
     }
- 
+    public void IAPlay(){
+    	Move bestMovement  = cpuPlayer.getBestMove();
+    	buttonPressed(bestMovement.sourceRow, bestMovement.sourceColumn);
+    	buttonPressed(bestMovement.targetRow, bestMovement.targetColumn);
+    }
     /**
      * @return current game state
      */
@@ -230,17 +221,18 @@ public class ChessGUI {
 			heldPiece.setColumn(column);
 			heldPiece.setRow(row);
 			pieces.add(heldPiece);
-			if( MoveHelper.isCheck(heldPiece.isWhite(), chessBoardButtons) ){
+			if(MoveHelper.isCheck(heldPiece.isWhite(), chessBoardButtons) ){
 				lblGameState.setText("En Jaque Rey " +( heldPiece.isWhite() ? "Negro" : "Blanco") );
 			}
 			repaintPieces();
 			MoveHelper.reEnableAll(chessBoardButtons);
 			setBasicChessBackgrounds();
-			
-			
 			//Reset held piece
 			heldPiece = null;
 			isHoldingAPiece = false;
+			
+			if(isComputer && this.gameState == GAME_STATE_BLACK )
+	        	IAPlay();
 		}
 		else{
 			if(pieceInAPosition(row,column) != null && canPieceMove(pieceInAPosition(row,column))){
