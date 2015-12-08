@@ -103,7 +103,6 @@ public class IAPlayer {
 			 chessGame.MoveHelper.reEnableAll(chessGame.getChessBoardButtons());
 			 return true;
 		 }else{
-			 System.out.println("SIEMPRE DE VUELVO FALSO");
 			 chessGame.MoveHelper.reEnableAll(chessGame.getChessBoardButtons());
 			 return false;
 		 }			 

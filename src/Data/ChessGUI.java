@@ -37,7 +37,8 @@ public class ChessGUI {
     public JLabel lblGameState;
     public Helpers.MoveHelper MoveHelper ;
     public IAPlayer cpuPlayer;
-	
+    public String movements = "";
+    
 	public ChessGUI(JFrame frame, Boolean computer){
 		
 		//Generate the Game Panel, which includes the Board and the extra game information
@@ -215,6 +216,19 @@ public class ChessGUI {
 		return ChessBoard;
 	}
 	
+	public char convertToLetter(int number){
+		switch(number){
+			case 0: return 'H'; 
+			case 1: return 'G';
+			case 2: return 'F';
+			case 3: return 'E';
+			case 4: return 'D';
+			case 5: return 'C';
+			case 6: return 'B';
+			case 7: return 'A';
+			default: return 'A';
+		}
+	}
 	
 	public void buttonPressed (int row, int column){
 		if(isHoldingAPiece){
@@ -227,6 +241,7 @@ public class ChessGUI {
 			}
 			if(heldPiece.getColumn() != column || heldPiece.getRow() != row)
 				changeGameState();
+			movements += convertToLetter(heldPiece.getColumn()) +""+ (heldPiece.getRow()+1) + " x " + convertToLetter(column) + (row +1) + "\n";
 			heldPiece.setColumn(column);
 			heldPiece.setRow(row);
 			pieces.add(heldPiece);
@@ -242,6 +257,7 @@ public class ChessGUI {
 			
 			if(isComputer && this.gameState == GAME_STATE_BLACK )
 	        	IAPlay();
+			System.out.println(movements);
 		}
 		else{
 			if(pieceInAPosition(row,column) != null && canPieceMove(pieceInAPosition(row,column))){
