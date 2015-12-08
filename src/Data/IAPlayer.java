@@ -3,8 +3,6 @@ package Data;
 import java.util.ArrayList;
 import java.util.List;
 
-import UserInterface.GraphicUI;
-
 public class IAPlayer {
 	
 	private ChessGUI chessGame;

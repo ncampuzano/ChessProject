@@ -86,7 +86,7 @@ public class ChessGUI {
     		if(this.gameState == GAME_STATE_WHITE){
     			lblGameState.setText("Pensando...");
     			try {
-    			    Thread.sleep(1500);                 //1000 milliseconds is one second.
+    			    Thread.sleep(2000);                 //1000 milliseconds is one second.
     			} catch(InterruptedException ex) {
     			    Thread.currentThread().interrupt();
     			}
