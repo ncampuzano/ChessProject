@@ -81,15 +81,15 @@ public class MoveHelper {
 		Piece pawn = Chess.pieceInAPosition(Row,Col);
 		if(pawn.isWhite()){
 			//Check both attacking squares
-			if((Col+1) <= 7)
+			if((Col+1) <= 7 && (Row+1) <= 7)
 				Pieces[Row+1][Col+1].setEnabled(true);
-			if((Col-1) >= 0)
+			if((Col-1) >= 0 && (Row+1) <= 7)
 				Pieces[Row+1][Col-1].setEnabled(true);
 		}
 		else{
-			if((Col+1) <= 7)
+			if((Col+1) <= 7 && (Row-1) >= 0)
 				Pieces[Row-1][Col+1].setEnabled(true);
-			if((Col-1) >= 0)
+			if((Col-1) >= 0 && (Row-1) >= 0)
 				Pieces[Row-1][Col-1].setEnabled(true);
 		}
 		
@@ -315,7 +315,7 @@ public class MoveHelper {
 	    		Pieces[Row+1][Col-1].setEnabled(false);
 	    	}
 			//Check normal movement
-			if(!Chess.isThereAPieceInPosition(Row+1, Col)){
+			if(!Chess.isThereAPieceInPosition(Row+1, Col) && (Row+1) <= 7){
 				Pieces[Row+1][Col].setEnabled(true);
 				if(pawn.getRow() == 1 && !Chess.isThereAPieceInPosition(Row+2, Col)){
 					Pieces[Row+2][Col].setEnabled(true);
@@ -329,9 +329,9 @@ public class MoveHelper {
 			if((!Chess.isThereAPieceInPosition(Row-1, Col-1) || !isEnemyPiece(pawn, Row-1, Col-1)) && (Row-1)>=0 && (Col-1)>= 0){
 				Pieces[Row-1][Col-1].setEnabled(false);
 			}
-			if(!Chess.isThereAPieceInPosition(Row-1, Col)){
+			if(!Chess.isThereAPieceInPosition(Row-1, Col) && (Row-1) >= 0 ){
 				Pieces[Row-1][Col].setEnabled(true);
-				if(pawn.getRow() == 6 && !Chess.isThereAPieceInPosition(Row-2, Col)){
+				if(pawn.getRow() == 6 && !Chess.isThereAPieceInPosition(Row-2, Col) ){
 					Pieces[Row-2][Col].setEnabled(true);
 				}
 			}	

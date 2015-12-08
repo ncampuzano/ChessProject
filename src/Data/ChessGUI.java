@@ -51,7 +51,7 @@ public class ChessGUI {
 		lblGameState = new JLabel(labelText);
 		
 		panelCapturasPromocionesEtc = new JPanel() ;
-		panelCapturasPromocionesEtc.setLayout(new GridLayout(1, 0, 0, 0));
+		panelCapturasPromocionesEtc.setLayout(new GridLayout(9,4));
 		GamePanel.add(panelCapturasPromocionesEtc, BorderLayout.WEST);
 		
 		//Instance the basic ChessBoard
@@ -66,6 +66,7 @@ public class ChessGUI {
 		
 	}
 	public void paintCapturedPieces(){
+		panelCapturasPromocionesEtc.removeAll();
 		for(Piece piece : capturedPieces){
 			panelCapturasPromocionesEtc.add(new JLabel(new ImageIcon(piece.getPieceImage())));
 		}
