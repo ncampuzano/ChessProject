@@ -54,14 +54,14 @@ public class IAPlayer {
 	 
 	                // iterate over all board rows and columns
 	                for (int targetRow = 0; targetRow <= 7; targetRow++) {
-	                    for (int targetColumn = 0 targetColumn <= 7; targetColumn++) {
+	                    for (int targetColumn = 0; targetColumn <= 7; targetColumn++) {
 	 
 	                        // finish generating move
 	                        testMove.targetRow = targetRow;
 	                        testMove.targetColumn = targetColumn;
 	 
 	                        // check if generated move is valid
-	                        if (this.validator.isMoveValid(testMove, false)) {
+	                        if (isMoveValid(testMove)) {
 	                            // valid move
 	                            validMoves.add(testMove.clone());
 	                        } else {
@@ -76,6 +76,17 @@ public class IAPlayer {
 	    }
 	 private boolean convertToInt(int i){
 		 return (i == 1) ? true: false;
+	 }
+	 private boolean isMoveValid(Move move){
+		 chessGame.MoveHelper.EnableMovements(chessGame.pieceInAPosition(move.sourceRow,move.sourceColumn), chessGame.getChessBoardButtons());
+		 if(chessGame.getChessBoardButtons()[move.targetRow][move.targetColumn].isEnabled()){
+			 chessGame.MoveHelper.reEnableAll(chessGame.getChessBoardButtons());
+			 return true;
+		 }else{
+			 
+			 return false;
+		 }
+			 
 	 }
 	 private int evaluateState() {
 	        // add up score

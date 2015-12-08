@@ -31,7 +31,7 @@ public class ChessGUI {
     static final int GAME_STATE_BLACK = 0;
     static final int GAME_STATE_END = 2;
     public JLabel lblGameState;
-    private Helpers.MoveHelper MoveHelper ;
+    public Helpers.MoveHelper MoveHelper ;
 	
 	public ChessGUI(JFrame frame, Boolean computer){
 		
@@ -90,7 +90,7 @@ public class ChessGUI {
     			} catch(InterruptedException ex) {
     			    Thread.currentThread().interrupt();
     			}
-    			//Make Movement
+    			//TODO
     		}   		
     	}else{
     		switch (this.gameState) {
