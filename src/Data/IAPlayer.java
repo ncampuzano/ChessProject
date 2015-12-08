@@ -64,9 +64,7 @@ public class IAPlayer {
 	        List<Piece> pieces = this.chessGame.getPieces();
 	        List<Move> validMoves = new ArrayList<Move>();
 	        Move testMove = new Move(0,0,0,0);
-	        
 	        int pieceColor = this.chessGame.getGameState();
-	 
 	        // iterate over all non-captured pieces
 	        for (Piece piece : pieces) {
 	 
@@ -83,43 +81,32 @@ public class IAPlayer {
 	                        // finish generating move
 	                        testMove.targetRow = targetRow;
 	                        testMove.targetColumn = targetColumn;
-	                        System.out.println("" + testMove.targetRow + "---" + testMove.targetColumn);
 	                        // check if generated move is valid
 	                        if (isMoveValid(testMove)) {
 	                            validMoves.add(testMove.clone());
 	                        } else {
 	                            // generated move is invalid, so we skip it
 	                        }
-	                        System.out.println("SALI");
 	                    }
 	                }
-	 
 	            }
 	        }
-	        System.out.println("ACA NO ESTA EL PROBLEMA");
 	        return validMoves;
 	    }
 	 private boolean convertToInt(int i){
 		 return (i == 1) ? true: false;
 	 }
 	 private boolean isMoveValid(Move move){
-		 System.out.println("Enable Movements");
+		 chessGame.MoveHelper.disableAll(chessGame.getChessBoardButtons());
 		 chessGame.MoveHelper.EnableMovements(chessGame.pieceInAPosition(move.sourceRow,move.sourceColumn), chessGame.getChessBoardButtons());
-		 System.out.println("After Enable Movements");
-		 
-		 System.out.println("To Evaluate " + move.targetRow + "---" + move.targetColumn);
 		 if(chessGame.getChessBoardButtons()[move.targetRow][move.targetColumn].isEnabled()){
-			 System.out.println("AFTER TRUE Evaluate " + move.targetRow + "---" + move.targetColumn);
-
 			 chessGame.MoveHelper.reEnableAll(chessGame.getChessBoardButtons());
 			 return true;
 		 }else{
-			 System.out.println("AFTER Evaluate " + move.targetRow + "---" + move.targetColumn);
-
+			 System.out.println("SIEMPRE DE VUELVO FALSO");
 			 chessGame.MoveHelper.reEnableAll(chessGame.getChessBoardButtons());
 			 return false;
-		 }
-			 
+		 }			 
 	 }
 	 private int evaluateState() {
 	        // add up score
