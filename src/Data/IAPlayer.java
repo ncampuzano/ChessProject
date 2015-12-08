@@ -8,11 +8,10 @@ import UserInterface.GraphicUI;
 public class IAPlayer {
 	
 	private ChessGUI chessGame;
-	private	GraphicUI graphicUI;
 	
-    public IAPlayer(ChessGUI chessGame,GraphicUI graphic ) {
+    public IAPlayer(ChessGUI chessGame) {
         this.chessGame = chessGame;
-        this.graphicUI = graphic;
+
     }
     
 	private Move getBestMove() {
