@@ -1,8 +1,9 @@
 package Data;
-
+import Logic.ChessGUI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
 
 public class IAPlayer {
 	
@@ -31,7 +32,7 @@ public class IAPlayer {
             if( evaluationResult > bestResult){
                 bestResult = evaluationResult;
                 bestMove = move;
-            }if(evaluationResult == bestResult && rnd.nextInt(10) > 5){
+            }if(evaluationResult == bestResult && rnd.nextInt(10) > rnd.nextInt(10)){
             	bestResult = evaluationResult;
                 bestMove = move;
             }
@@ -131,10 +132,10 @@ public class IAPlayer {
 	        // return evaluation result depending on who's turn it is
 	        int gameState = this.chessGame.getGameState();
 	         
-	        if( gameState == chessGame.GAME_STATE_BLACK){
+	        if(gameState == 0){
 	            return scoreBlack - scoreWhite;
 	         
-	        }else if(gameState == chessGame.GAME_STATE_WHITE){
+	        }else if(gameState == 1){
 	            return scoreWhite - scoreBlack;
 	        }else{
 	            throw new IllegalStateException("unknown game state: "+gameState);

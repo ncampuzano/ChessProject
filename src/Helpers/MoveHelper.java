@@ -5,8 +5,8 @@ import java.util.List;
 
 import javax.swing.JButton;
 
-import Data.ChessGUI;
 import Data.Piece;
+import Logic.ChessGUI;
 
 public class MoveHelper {
 	private ChessGUI Chess;

@@ -1,5 +1,6 @@
 package UserInterface;
 import Data.*;
+import Logic.ChessGUI;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -18,6 +19,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
 import javax.swing.SwingConstants;
@@ -146,8 +148,14 @@ public class GraphicUI {
 		btnResign.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(Chess != null){
-					toolBar.remove(Chess.lblGameState);
-					Chess.DestroyChessBoard(frame);
+					if(Chess.getGameState() == 0){
+		    			Chess.lblGameState.setText("GAME OVER. WHITE WON!");
+		    		}
+		    		else{
+		    			Chess.lblGameState.setText("GAME OVER. BLACK WON!");
+		    		}
+					Chess.setGameState(2);
+					Chess.changeGameState();
 				}
 			}
 		});

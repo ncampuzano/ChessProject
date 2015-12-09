@@ -1,4 +1,4 @@
-package Data;
+package Logic;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -22,6 +22,10 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import Data.IAPlayer;
+import Data.Move;
+import Data.Piece;
+
 
 
 public class ChessGUI {
@@ -38,7 +42,8 @@ public class ChessGUI {
 	
 	private Piece heldPiece = null;
 	private int gameState = GAME_STATE_WHITE;
-    static final int GAME_STATE_WHITE = 1;
+
+	static final int GAME_STATE_WHITE = 1;
     static final int GAME_STATE_BLACK = 0;
     static final int GAME_STATE_END = 2;
     public JLabel lblGameState;
@@ -437,5 +442,8 @@ public class ChessGUI {
 	}
 	public void setComputer(boolean isComputer) {
 		this.isComputer = isComputer;
+	}
+    public void setGameState(int gameState) {
+		this.gameState = gameState;
 	}
 }
