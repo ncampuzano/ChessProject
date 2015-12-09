@@ -52,7 +52,7 @@ public class ChessGUI {
 		lblGameState = new JLabel(labelText);
 		
 		panelCapturasPromocionesEtc = new JPanel() ;
-		panelCapturasPromocionesEtc.setLayout(new GridLayout(2,18));
+		panelCapturasPromocionesEtc.setLayout(new GridLayout(1,1));
 		GamePanel.add(panelCapturasPromocionesEtc, BorderLayout.SOUTH);
 		
 		//Instance the basic ChessBoard
