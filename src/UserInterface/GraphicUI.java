@@ -134,7 +134,9 @@ public class GraphicUI {
 			public void actionPerformed(ActionEvent e) {
 				if(Chess != null)
 					keepGame();	
-				
+				else
+		        	JOptionPane.showMessageDialog(null,"No hay ningún juego para guardar" ,"",JOptionPane.INFORMATION_MESSAGE);
+
 			}
 		});
 		
