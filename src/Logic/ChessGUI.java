@@ -187,7 +187,7 @@ public class ChessGUI {
     	return false;
     }
     public void IAPlay(){
-    	Move bestMovement  = cpuPlayer.getBestMove();
+    	Move bestMovement  = cpuPlayer.getMove();
     	buttonPressed(bestMovement.sourceRow, bestMovement.sourceColumn);
     	buttonPressed(bestMovement.targetRow, bestMovement.targetColumn);
     }

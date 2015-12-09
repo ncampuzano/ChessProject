@@ -5,13 +5,19 @@ import java.util.List;
 import java.util.Random;
 
 
-public class IAPlayer {
+public class IAPlayer implements IPlayer {
 	
 	private ChessGUI chessGame;
 	
     public IAPlayer(ChessGUI chessGame) {
     	this.chessGame = chessGame;
 
+    }
+    
+
+    @Override
+    public Move getMove() {
+    	return getBestMove();
     }
     
 	public Move getBestMove() {
@@ -158,4 +164,8 @@ public class IAPlayer {
 	            default: throw new IllegalArgumentException("unknown piece type: "+type);
 	        }
 	    } 
+	    @Override
+	    public void moveSuccessfullyExecuted(Move move) {
+	    	
+	    }
 }

@@ -136,7 +136,6 @@ public class GraphicUI {
 					keepGame();	
 				else
 		        	JOptionPane.showMessageDialog(null,"No hay ningún juego para guardar" ,"",JOptionPane.INFORMATION_MESSAGE);
-
 			}
 		});
 		
@@ -188,21 +187,5 @@ public class GraphicUI {
 			}
 		});
 		toolBar.add(btnSeparator);
-		
-		/*
-		 * 
-		JButton btnChangeGameState = new JButton("change");
-        btnChangeGameState.addActionListener(new ActionListener() {
-        			public void actionPerformed(ActionEvent e) {
-        				if(Chess != null)
-        					Chess.changeGameState();
-        			}
-        		});
-        toolBar.add(btnChangeGameState);
-		 * 
-		 * */
-        
-		
-
 	}
 }
