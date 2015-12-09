@@ -75,8 +75,9 @@ public class GraphicUI {
 				os.writeObject("0\n" + Chess.movements);		
 			}
 			os.close();
+        	JOptionPane.showMessageDialog(null,"Guardado correctamente" ,"",JOptionPane.INFORMATION_MESSAGE);
 		} catch (Exception e1) {
-			// TODO Auto-generated catch block
+        	JOptionPane.showMessageDialog(null,"No se pudo guardar" ,"",JOptionPane.INFORMATION_MESSAGE);
 			
 		}	
 	}
@@ -133,6 +134,7 @@ public class GraphicUI {
 			public void actionPerformed(ActionEvent e) {
 				if(Chess != null)
 					keepGame();	
+				
 			}
 		});
 		
