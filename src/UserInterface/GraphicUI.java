@@ -6,6 +6,9 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
 import java.util.*;
 
 import javax.swing.ImageIcon;
@@ -30,7 +33,8 @@ public class GraphicUI {
 	public Piece heldPiece = null;
 	public JPanel ChessBoard = null;
 	public ChessGUI Chess = null;
-	
+	FileOutputStream fileStream = null;
+
 	/**
 	 * Launch the application.
 	 */
@@ -57,6 +61,25 @@ public class GraphicUI {
 	/**
 	 * Initialize the contents of the frame.
 	 */
+	private void keepGame(){
+		try {
+			fileStream = new FileOutputStream("Game.obj");
+			ObjectOutputStream os = new ObjectOutputStream(fileStream);
+			if(Chess.isComputer()){
+				os.writeObject("1\n"+ Chess.movements);
+			}else{
+				if(Chess.getGameState() == 1){
+					os.writeObject("0\n"+ "1\n"+ Chess.movements);
+				}else{
+					os.writeObject("0\n"+ "0\n"+ Chess.movements);					
+				}
+			}
+			os.close();
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			
+		}	
+	}
 	private void initialize() {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 750, 600);
@@ -102,29 +125,35 @@ public class GraphicUI {
 				toolBar.add(Chess.lblGameState);
 			}
 		});
+		JMenu btnActions = new JMenu("Acciones");
+		toolBar.add(btnActions);
+		JMenuItem btnSave = new JMenuItem("Guardar");
 		
-		
-		JMenu btnSave = new JMenu("Guardar");
 		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if(Chess != null)
+					keepGame();	
 			}
 		});
-		toolBar.add(btnSave);
 		
-		JMenu btnLoad = new JMenu("Cargar");
+		JMenuItem btnLoad = new JMenuItem("Cargar");
 		btnLoad.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		toolBar.add(btnLoad);
 		
-		JMenu btnResign = new JMenu("Rendirse");
+		JMenuItem btnResign = new JMenuItem("Rendirse");
 		btnResign.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if(Chess != null){
+					toolBar.remove(Chess.lblGameState);
+					Chess.DestroyChessBoard(frame);
+				}
 			}
 		});
-		toolBar.add(btnResign);
-		
+		btnActions.add(btnSave);
+		btnActions.add(btnLoad);
+		btnActions.add(btnResign);
 		JMenu btnSeparator = new JMenu("           ");
 		btnResign.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

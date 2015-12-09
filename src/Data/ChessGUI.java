@@ -34,7 +34,8 @@ public class ChessGUI {
 	JPanel panelCapturasPromocionesEtc = null;
 	JPanel panelMovements = null;
 	private boolean isHoldingAPiece = false;
-	private boolean isComputer;
+	public boolean isComputer;
+	
 	private Piece heldPiece = null;
 	private int gameState = GAME_STATE_WHITE;
     static final int GAME_STATE_WHITE = 1;
@@ -46,6 +47,7 @@ public class ChessGUI {
     public String movements = "";
     JTextArea textMovement;
 	
+    
     public ChessGUI(JFrame frame, Boolean computer){
 		
 		//Generate the Game Panel, which includes the Board and the extra game information
@@ -430,5 +432,10 @@ public class ChessGUI {
 	public void setHeldPiece(Piece heldPiece) {
 		this.heldPiece = heldPiece;
 	}
-	
+	public boolean isComputer() {
+		return isComputer;
+	}
+	public void setComputer(boolean isComputer) {
+		this.isComputer = isComputer;
+	}
 }

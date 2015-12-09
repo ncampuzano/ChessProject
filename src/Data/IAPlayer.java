@@ -23,10 +23,8 @@ public class IAPlayer {
         	
         	//Make movement
         	move = MakeTestMovement(move);
-            
             //Evaluate
-            int evaluationResult = this.evaluateState();
-            
+            int evaluationResult = this.evaluateState();          
             //Undo
             UndoTestMovement(move);
             
@@ -38,7 +36,6 @@ public class IAPlayer {
                 bestMove = move;
             }
         }
-        System.out.println("done thinking! best move is: "+bestMove);
         return bestMove;
     }
 	private Move MakeTestMovement (Move move){
