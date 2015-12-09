@@ -53,7 +53,7 @@ public class ChessGUI {
     JTextArea textMovement;
 	
     
-    public ChessGUI(JFrame frame, Boolean computer){
+    public ChessGUI(JFrame frame, Boolean computer, String movements){
 		
 		//Generate the Game Panel, which includes the Board and the extra game information
 		GamePanel = new JPanel(new BorderLayout());
@@ -103,10 +103,23 @@ public class ChessGUI {
 		isComputer = computer;
 		initializePieces();
 		paintPieces();
-		
+		if(movements != null)
+			makeMovementsCharged(movements);
 		
 		
 	}
+    public void makeMovementsCharged(String movements){
+    	System.out.println("Inicio");
+		System.out.println(movements.length());
+    	for(int position = 2; position < movements.length(); position += 11){
+    		
+    		System.out.print(movements.charAt(position + 3));
+    		System.out.print(movements.charAt(position + 4));
+    		System.out.print(movements.charAt(position + 8));
+    		System.out.print(movements.charAt(position + 9));
+    		System.out.println("");
+    	}
+    }
 	public void paintCapturedPieces(){
 		panelCapturasPromocionesEtc.removeAll();
 		for(Piece piece : capturedPieces){

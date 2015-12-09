@@ -70,13 +70,9 @@ public class GraphicUI {
 			fileStream = new FileOutputStream("Game.obj");
 			ObjectOutputStream os = new ObjectOutputStream(fileStream);
 			if(Chess.isComputer()){
-				os.writeObject("1\n"+ Chess.movements);
+				os.writeObject("1\n" + Chess.movements);
 			}else{
-				if(Chess.getGameState() == 1){
-					os.writeObject("0\n"+ "1\n"+ Chess.movements);
-				}else{
-					os.writeObject("0\n"+ "0\n"+ Chess.movements);					
-				}
+				os.writeObject("0\n" + Chess.movements);		
 			}
 			os.close();
 		} catch (Exception e1) {
@@ -114,7 +110,7 @@ public class GraphicUI {
 					toolBar.remove(Chess.lblGameState);
 					Chess.DestroyChessBoard(frame);
 				}
-				Chess =  new ChessGUI(frame, false);
+				Chess =  new ChessGUI(frame,false,null);
 				toolBar.add(Chess.lblGameState);
 			}
 		});
@@ -125,7 +121,7 @@ public class GraphicUI {
 					toolBar.remove(Chess.lblGameState);
 					Chess.DestroyChessBoard(frame);
 				}
-				Chess =  new ChessGUI(frame, true);
+				Chess =  new ChessGUI(frame,true,null);
 				toolBar.add(Chess.lblGameState);
 			}
 		});
@@ -147,7 +143,17 @@ public class GraphicUI {
 					fileInStream = new FileInputStream("Game.obj");
 					ObjectInputStream os = new ObjectInputStream(fileInStream);
 					String movements = (String)os.readObject();
-					
+					if(Chess != null){
+						toolBar.remove(Chess.lblGameState);
+						Chess.DestroyChessBoard(frame);
+					}
+					if(movements.charAt(0) == '1'){
+						Chess =  new ChessGUI(frame,true,movements);
+						toolBar.remove(Chess.lblGameState);
+					}else{
+						Chess =  new ChessGUI(frame,false,movements);
+						toolBar.remove(Chess.lblGameState);
+					}
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 				}
