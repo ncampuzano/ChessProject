@@ -7,8 +7,10 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.*;
 
@@ -36,7 +38,7 @@ public class GraphicUI {
 	public JPanel ChessBoard = null;
 	public ChessGUI Chess = null;
 	FileOutputStream fileStream = null;
-
+	FileInputStream fileInStream = null;
 	/**
 	 * Launch the application.
 	 */
@@ -141,6 +143,14 @@ public class GraphicUI {
 		JMenuItem btnLoad = new JMenuItem("Cargar");
 		btnLoad.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				try {
+					fileInStream = new FileInputStream("Game.obj");
+					ObjectInputStream os = new ObjectInputStream(fileInStream);
+					String movements = (String)os.readObject();
+					
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+				}
 			}
 		});
 		
