@@ -2,6 +2,7 @@ package Data;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,6 +15,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 
@@ -26,6 +29,7 @@ public class ChessGUI {
 	private JPanel ChessBoard = null;
 	private JPanel GamePanel = null;
 	JPanel panelCapturasPromocionesEtc = null;
+	JPanel panelMovements = null;
 	private boolean isHoldingAPiece = false;
 	private boolean isComputer;
 	private Piece heldPiece = null;
@@ -37,7 +41,7 @@ public class ChessGUI {
     public Helpers.MoveHelper MoveHelper ;
     public IAPlayer cpuPlayer;
     public String movements = "";
-    
+    JTextArea textMovement;
 	public ChessGUI(JFrame frame, Boolean computer){
 		
 		//Generate the Game Panel, which includes the Board and the extra game information
@@ -53,6 +57,12 @@ public class ChessGUI {
 		panelCapturasPromocionesEtc = new JPanel() ;
 		panelCapturasPromocionesEtc.setLayout(new GridLayout(1,1));
 		GamePanel.add(panelCapturasPromocionesEtc, BorderLayout.SOUTH);
+	
+
+		panelMovements = new JPanel() ;
+		panelMovements.setLayout(new GridLayout(4,4));
+		panelMovements.add(new JLabel("   Movimientos"));
+		GamePanel.add(panelMovements, BorderLayout.WEST);
 		
 		//Instance the basic ChessBoard
 		chessBoardButtons = setBasicChessBoardButtons();
@@ -238,9 +248,11 @@ public class ChessGUI {
 				pieces.remove(pieceInAPosition(row,column));
 				paintCapturedPieces();
 			}
-			if(heldPiece.getColumn() != column || heldPiece.getRow() != row)
-				changeGameState();
-			movements += convertToLetter(heldPiece.getColumn()) +""+ (heldPiece.getRow()+1) + " x " + convertToLetter(column) + (row +1) + "\n";
+			if(heldPiece.getColumn() != column || heldPiece.getRow() != row){
+					changeGameState();
+					movements += "   " + convertToLetter(heldPiece.getColumn()) +""+ (heldPiece.getRow()+1) + " x " + convertToLetter(column) + (row +1) + "\n";
+					textMovement.setText(movements);
+			}
 			heldPiece.setColumn(column);
 			heldPiece.setRow(row);
 			if( heldPiece.getType() == Piece.TYPE_PAWN && MoveHelper.isPromoted(heldPiece) ){
@@ -304,7 +316,11 @@ public class ChessGUI {
 			pieces.add(new Piece (false,Piece.TYPE_PAWN,6,i));
 		}
 		if(isComputer)
-			cpuPlayer = new IAPlayer(this); 	
+			cpuPlayer = new IAPlayer(this);
+		
+		textMovement = new JTextArea();
+		textMovement.setEditable(false);
+		panelMovements.add(textMovement);
 	}
 	public boolean isThereAPieceInPosition(int row, int column){
 		for(Piece piece : pieces){
