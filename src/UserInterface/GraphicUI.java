@@ -103,31 +103,7 @@ public class GraphicUI {
 		
 		btnNewGame.add(btnPlayerGame);
 		btnNewGame.add(btnComputerGame);
-		
-		btnPlayerGame.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				//Generate the Game Panel, which includes the Board and the extra game information
-				if(Chess != null){
-					toolBar.remove(Chess.lblGameState);
-					Chess.DestroyChessBoard(frame);
-				}
-				Chess =  new ChessGUI(frame,false,null);
-				toolBar.add(Chess.lblGameState);
-			}
-		});
-		btnComputerGame.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				//Generate the Game Panel, which includes the Board and the extra game information
-				if(Chess != null){
-					toolBar.remove(Chess.lblGameState);
-					Chess.DestroyChessBoard(frame);
-				}
-				Chess =  new ChessGUI(frame,true,null);
-				toolBar.add(Chess.lblGameState);
-			}
-		});
 		JMenu btnActions = new JMenu("Acciones");
-		toolBar.add(btnActions);
 		JMenuItem btnSave = new JMenuItem("Guardar");
 		
 		btnSave.addActionListener(new ActionListener() {
@@ -181,18 +157,47 @@ public class GraphicUI {
 		JMenuItem btnVoice = new JMenuItem("Voz");
 		btnVoice.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Chess.initializeVoice();
+				if(Chess != null){
+					Chess.initializeVoice();
+				}
 			}
 		});
 		btnActions.add(btnSave);
 		btnActions.add(btnLoad);
 		btnActions.add(btnResign);
-		btnActions.add(btnVoice);
+		
 		JMenu btnSeparator = new JMenu("           ");
 		btnResign.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
+		
+		btnPlayerGame.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//Generate the Game Panel, which includes the Board and the extra game information
+				if(Chess != null){
+					toolBar.remove(Chess.lblGameState);
+					Chess.DestroyChessBoard(frame);
+				}
+				Chess =  new ChessGUI(frame,false,null);
+				toolBar.add(Chess.lblGameState);
+				btnActions.add(btnVoice);
+			}
+		});
+		btnComputerGame.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//Generate the Game Panel, which includes the Board and the extra game information
+				if(Chess != null){
+					toolBar.remove(Chess.lblGameState);
+					Chess.DestroyChessBoard(frame);
+				}
+				Chess =  new ChessGUI(frame,true,null);
+				toolBar.add(Chess.lblGameState);
+				btnActions.remove(btnVoice);
+			}
+		});
+		toolBar.add(btnActions);
 		toolBar.add(btnSeparator);
+		
 	}
 }
