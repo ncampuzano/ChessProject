@@ -3,6 +3,8 @@ package Data;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,6 +17,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -42,7 +45,8 @@ public class ChessGUI {
     public IAPlayer cpuPlayer;
     public String movements = "";
     JTextArea textMovement;
-	public ChessGUI(JFrame frame, Boolean computer){
+	
+    public ChessGUI(JFrame frame, Boolean computer){
 		
 		//Generate the Game Panel, which includes the Board and the extra game information
 		GamePanel = new JPanel(new BorderLayout());
@@ -58,12 +62,33 @@ public class ChessGUI {
 		panelCapturasPromocionesEtc.setLayout(new GridLayout(1,1));
 		GamePanel.add(panelCapturasPromocionesEtc, BorderLayout.SOUTH);
 	
-
+		
 		panelMovements = new JPanel() ;
-		panelMovements.setLayout(new GridLayout(4,4));
-		panelMovements.add(new JLabel("   Movimientos"));
+		panelMovements.setLayout(new GridBagLayout());
+		GridBagConstraints constraints = new GridBagConstraints();
+		constraints.gridx = 0; 
+		constraints.gridy = 0; 
+		constraints.gridwidth = 1; 
+		constraints.gridheight = 1; 
+
+		panelMovements.add(new JLabel("   Movimientos"),constraints);
+		constraints.gridx = 0; 
+		constraints.gridy = 1; 
+		constraints.gridwidth = 2; 
+		constraints.gridheight = 2; 
+
+		textMovement = new JTextArea();
+		textMovement.setEditable(false);
+		textMovement.setPreferredSize(new Dimension(100,400));
+		JScrollPane scroll = new JScrollPane (textMovement, 
+		   JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+		panelMovements.add(scroll,constraints);
+
+		
 		GamePanel.add(panelMovements, BorderLayout.WEST);
 		
+		
+
 		//Instance the basic ChessBoard
 		chessBoardButtons = setBasicChessBoardButtons();
 		ChessBoard = setChessBoard(chessBoardButtons);
@@ -318,9 +343,7 @@ public class ChessGUI {
 		if(isComputer)
 			cpuPlayer = new IAPlayer(this);
 		
-		textMovement = new JTextArea();
-		textMovement.setEditable(false);
-		panelMovements.add(textMovement);
+		
 	}
 	public boolean isThereAPieceInPosition(int row, int column){
 		for(Piece piece : pieces){
