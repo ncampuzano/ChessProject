@@ -178,9 +178,16 @@ public class GraphicUI {
 				}
 			}
 		});
+		JMenuItem btnVoice = new JMenuItem("Voz");
+		btnVoice.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Chess.initializeVoice();
+			}
+		});
 		btnActions.add(btnSave);
 		btnActions.add(btnLoad);
 		btnActions.add(btnResign);
+		btnActions.add(btnVoice);
 		JMenu btnSeparator = new JMenu("           ");
 		btnResign.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

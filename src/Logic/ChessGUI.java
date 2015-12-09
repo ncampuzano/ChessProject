@@ -25,6 +25,7 @@ import javax.swing.SwingConstants;
 import Data.IAPlayer;
 import Data.Move;
 import Data.Piece;
+import Helpers.RecognizerVoiceHelper;
 
 
 
@@ -51,6 +52,8 @@ public class ChessGUI {
     public IAPlayer cpuPlayer;
     public String movements = "";
     JTextArea textMovement;
+    private String moveVoice;
+    public RecognizerVoiceHelper voiceHelper;
 	
     
     public ChessGUI(JFrame frame, Boolean computer, String movements){
@@ -108,6 +111,12 @@ public class ChessGUI {
 		
 		
 	}
+    public void initializeVoice(){
+    	voiceHelper = new RecognizerVoiceHelper(this);
+    	Thread voice = new Thread(voiceHelper);
+    	voice.start();
+    }
+
     public void makeMovementsCharged(String movements){
 
     	for(int position = 2; position < movements.length(); position += 11){
@@ -115,8 +124,21 @@ public class ChessGUI {
     		buttonPressed(Character.getNumericValue(movements.charAt(position + 9))-1,convertToInt(movements.charAt(position + 8)));
     	}
     }
-    public int convertToInt(char letter){
+    public int convertToInt(String letter){
 		switch(letter){
+			case "one": return 0; 
+			case "two": return 1;
+			case "three": return 2;
+			case "four": return 3;
+			case "five": return 4;
+			case "six": return 5;
+			case "seven": return 6;
+			case "eigth": return 7;
+			default: return 7;
+		}
+	}
+    public int convertToInt(char letter){
+		switch(Character.toUpperCase(letter)){
 			case 'H': return 0; 
 			case 'G': return 1;
 			case 'F': return 2;

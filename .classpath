@@ -2,5 +2,9 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="G:/Datos portatil/Universidad Nacional/Semestre II/POO/sphinx4-0.1alpha-bin/sphinx4-0.1alpha/lib/jsapi.jar"/>
+	<classpathentry kind="lib" path="G:/Datos portatil/Universidad Nacional/Semestre II/POO/sphinx4-0.1alpha-bin/sphinx4-0.1alpha/lib/sphinx4.jar"/>
+	<classpathentry kind="lib" path="G:/Datos portatil/Universidad Nacional/Semestre II/POO/sphinx4-0.1alpha-bin/sphinx4-0.1alpha/lib/TIDIGITS_8gau_13dCep_16k_40mel_130Hz_6800Hz.jar"/>
+	<classpathentry kind="lib" path="G:/Datos portatil/Universidad Nacional/Semestre II/POO/sphinx4-0.1alpha-bin/sphinx4-0.1alpha/lib/WSJ_8gau_13dCep_16k_40mel_130Hz_6800Hz.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
