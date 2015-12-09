@@ -149,10 +149,10 @@ public class GraphicUI {
 					}
 					if(movements.charAt(0) == '1'){
 						Chess =  new ChessGUI(frame,true,movements);
-						toolBar.remove(Chess.lblGameState);
+						toolBar.add(Chess.lblGameState);
 					}else{
 						Chess =  new ChessGUI(frame,false,movements);
-						toolBar.remove(Chess.lblGameState);
+						toolBar.add(Chess.lblGameState);
 					}
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block

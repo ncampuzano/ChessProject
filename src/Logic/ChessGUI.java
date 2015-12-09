@@ -109,17 +109,25 @@ public class ChessGUI {
 		
 	}
     public void makeMovementsCharged(String movements){
-    	System.out.println("Inicio");
-		System.out.println(movements.length());
+
     	for(int position = 2; position < movements.length(); position += 11){
-    		
-    		System.out.print(movements.charAt(position + 3));
-    		System.out.print(movements.charAt(position + 4));
-    		System.out.print(movements.charAt(position + 8));
-    		System.out.print(movements.charAt(position + 9));
-    		System.out.println("");
+    		buttonPressed(Character.getNumericValue(movements.charAt(position + 4))-1,convertToInt(movements.charAt(position + 3)));
+    		buttonPressed(Character.getNumericValue(movements.charAt(position + 9))-1,convertToInt(movements.charAt(position + 8)));
     	}
     }
+    public int convertToInt(char letter){
+		switch(letter){
+			case 'H': return 0; 
+			case 'G': return 1;
+			case 'F': return 2;
+			case 'E': return 3;
+			case 'D': return 4;
+			case 'C': return 5;
+			case 'B': return 6;
+			case 'A': return 7;
+			default: return 7;
+		}
+	}
 	public void paintCapturedPieces(){
 		panelCapturasPromocionesEtc.removeAll();
 		for(Piece piece : capturedPieces){
