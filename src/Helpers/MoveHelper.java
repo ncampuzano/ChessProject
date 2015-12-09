@@ -473,9 +473,17 @@ public class MoveHelper {
 			Pieces[king.getRow()][king.getColumn()].setEnabled(true);
 			EnableMovements(king, Pieces);
 			if( !(Pieces[king.getRow()][king.getColumn()].isEnabled()) ){
-				System.out.println("Check!!" + king.getRow() + " : " + king.getColumn());
 				return true;
 			}
+		}
+		return false;
+	}
+	public boolean isPromoted (Piece pawn){
+		if (pawn.isWhite() && pawn.getRow() == 7){
+			return true;
+		}
+		else if (!pawn.isWhite() && pawn.getRow() == 0){
+			return true;
 		}
 		return false;
 	}

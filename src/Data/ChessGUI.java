@@ -16,7 +16,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import javafx.scene.chart.PieChart.Data;
 
 
 public class ChessGUI {
@@ -244,6 +243,9 @@ public class ChessGUI {
 			movements += convertToLetter(heldPiece.getColumn()) +""+ (heldPiece.getRow()+1) + " x " + convertToLetter(column) + (row +1) + "\n";
 			heldPiece.setColumn(column);
 			heldPiece.setRow(row);
+			if( heldPiece.getType() == Piece.TYPE_PAWN && MoveHelper.isPromoted(heldPiece) ){
+				heldPiece = new Piece(heldPiece.isWhite(),Piece.TYPE_QUEEN,heldPiece.getRow(),heldPiece.getColumn());
+			}
 			pieces.add(heldPiece);
 			if(MoveHelper.isCheck(heldPiece.isWhite(), chessBoardButtons) ){
 				lblGameState.setText("En Jaque Rey " +( heldPiece.isWhite() ? "Negro" : "Blanco") );
