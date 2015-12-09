@@ -2,6 +2,7 @@ package Data;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class IAPlayer {
 	
@@ -17,7 +18,7 @@ public class IAPlayer {
         List<Move> validMoves = generateMoves();
         int bestResult = Integer.MIN_VALUE;
         Move bestMove = null;
-        
+        Random rnd = new Random();
         for (Move move : validMoves) {
         	
         	//Make movement
@@ -31,6 +32,9 @@ public class IAPlayer {
             
             if( evaluationResult > bestResult){
                 bestResult = evaluationResult;
+                bestMove = move;
+            }if(evaluationResult == bestResult && rnd.nextInt(10) > 5){
+            	bestResult = evaluationResult;
                 bestMove = move;
             }
         }
